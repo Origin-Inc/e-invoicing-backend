@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "e-invoicing"
+version = "0.1.0"
+description = "E-Invoicing Backend"
+authors = ["Joey"]
+readme = "README.md"
+packages = [{include = "e_invoicing", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+fastapi = "^0.111.0"
+uvicorn = "^0.30.1"
+supabase = "^2.5.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.2.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
