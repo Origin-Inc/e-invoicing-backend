@@ -1,0 +1,58 @@
+# Task ID: 17
+# Title: Implement Invoice Dashboard UI
+# Status: pending
+# Dependencies: 16
+# Priority: medium
+# Description: Create the main dashboard for displaying and managing invoices.
+# Details:
+1. Create dashboard layout component
+2. Implement invoice list component with pagination
+3. Add search and filter functionality
+4. Create invoice detail view component
+5. Implement manual correction UI
+6. Add delete invoice functionality
+
+# Test Strategy:
+1. Test invoice list rendering and pagination
+2. Verify search and filter functionality
+3. Test invoice detail view
+4. Ensure manual corrections are saved correctly
+5. Test delete functionality
+
+# Subtasks:
+## 1. Design Dashboard Layout [pending]
+### Dependencies: None
+### Description: Create the main dashboard layout that serves as the entry point for users, displaying key metrics and navigation to other features.
+### Details:
+The dashboard should provide a clear overview of financial data, use modern UI principles, and offer intuitive navigation to invoice lists and other sections.
+
+## 2. Implement Invoice List Component [pending]
+### Dependencies: 17.1
+### Description: Develop a component to display a list of invoices, showing essential details such as invoice number, date, amount, and status.
+### Details:
+Ensure the list is visually accessible, supports pagination or infinite scroll, and integrates seamlessly with the dashboard layout.
+
+## 3. Add Search and Filter Functionality [pending]
+### Dependencies: 17.2
+### Description: Enable users to search and filter invoices based on criteria such as date, status, or amount.
+### Details:
+Implement dynamic filtering and search input fields, updating the invoice list in real time as users interact with the controls.
+
+## 4. Develop Invoice Detail View [pending]
+### Dependencies: 17.2
+### Description: Create a detailed view for individual invoices, displaying all relevant information and actions.
+### Details:
+Allow users to click on an invoice from the list to view its full details, including line items, payment history, and customer information.
+
+## 5. Build Manual Correction UI [pending]
+### Dependencies: 17.4
+### Description: Design and implement a user interface for manually correcting invoice data.
+### Details:
+Provide editable fields and validation for users to update invoice details, with clear feedback and save/cancel options.
+
+## 6. Implement Delete Functionality [pending]
+### Dependencies: 17.2
+### Description: Add the ability for users to delete invoices from the system, with appropriate confirmation dialogs.
+### Details:
+Ensure deletion is secure, provides user confirmation, and updates the invoice list and dashboard metrics accordingly.
+

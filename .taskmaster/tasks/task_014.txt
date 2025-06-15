@@ -1,0 +1,16 @@
+# Task ID: 14
+# Title: Implement Integration Status Endpoint
+# Status: pending
+# Dependencies: 13
+# Priority: low
+# Description: Create an API endpoint to check the status of integrations.
+# Details:
+1. Implement GET /integrations/status endpoint
+2. Check and return status of Gmail connection
+3. Check and return status of QuickBooks connection
+4. Implement error handling for failed connections
+
+# Test Strategy:
+1. Test status retrieval for connected and disconnected states
+2. Verify correct error handling
+3. Ensure proper authorization checks

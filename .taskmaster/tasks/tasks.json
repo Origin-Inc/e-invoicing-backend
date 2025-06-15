@@ -1,0 +1,1667 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Setup Project Repository and Development Environment",
+      "description": "Initialize the project repository with Poetry for dependency management and set up the development environment with Docker and Docker Compose.",
+      "details": "1. Create a new Git repository\n2. Initialize Poetry project with `poetry init`\n3. Set Python version to 3.11 in pyproject.toml\n4. Create a multi-stage Dockerfile for Python 3.11\n5. Create a docker-compose.yml file with services for API, Worker, Redis, and PostgreSQL\n6. Set up environment variable configuration\n7. Implement health checks for all services\n8. Configure volume mounts for development",
+      "testStrategy": "1. Verify Poetry can install dependencies\n2. Ensure Docker containers can be built and run\n3. Check if services can communicate with each other\n4. Validate environment variables are properly loaded\n5. Test health check endpoints",
+      "priority": "high",
+      "dependencies": [],
+      "status": "done",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Initialize Git Repository",
+          "description": "Set up a new Git repository for the project to enable version control.",
+          "dependencies": [],
+          "details": "Run 'git init' in the project directory and create an initial commit with a .gitignore file tailored for Python, Docker, and Poetry artifacts.\n<info added on 2025-06-13T19:04:19.594Z>\nSuccessfully created private repository at Origin-Inc/Invoice_AI\n\nRepository Setup Completed:\n- Repository transferred to Origin-Inc organization\n- Added comprehensive .gitignore for Python/Docker projects\n- Created pyproject.toml with Python 3.11 requirement\n- Set up multi-stage Dockerfile using Python 3.11\n- Configured docker-compose.yml with all services (API, worker, beat, Redis, PostgreSQL, Flower)\n- Added .env.example with all required environment variables\n- Created comprehensive README with setup instructions\n- Added database initialization script\n- Initialized Python package structure (src/invoice_ai)\n\nRepository URL: https://github.com/Origin-Inc/Invoice_AI\nAll core infrastructure files are in place and ready for development.\n</info added on 2025-06-13T19:04:19.594Z>",
+          "status": "done"
+        },
+        {
+          "id": 2,
+          "title": "Configure Python 3.11 Environment",
+          "description": "Ensure the project uses Python 3.11 (not 3.13) for all development and deployment steps.",
+          "dependencies": [
+            1
+          ],
+          "details": "Set up Python 3.11 locally using pyenv or system package manager. Update project documentation and configuration files to specify Python 3.11 as the required version.",
+          "status": "done"
+        },
+        {
+          "id": 3,
+          "title": "Set Up Poetry for Dependency Management",
+          "description": "Install and configure Poetry to manage Python dependencies and project metadata.",
+          "dependencies": [
+            2
+          ],
+          "details": "Install Poetry, run 'poetry init' to create pyproject.toml, and configure Poetry to use the system Python 3.11 interpreter. Add required dependencies.",
+          "status": "done"
+        },
+        {
+          "id": 4,
+          "title": "Create Multi-Stage Dockerfile Using Python 3.11",
+          "description": "Write a multi-stage Dockerfile that uses Python 3.11 for both build and runtime stages, integrating Poetry for dependency installation.",
+          "dependencies": [
+            3
+          ],
+          "details": "Base the build stage on 'python:3.11-slim', install Poetry, copy project files, and install dependencies. Use a clean 'python:3.11-alpine' or similar for the runtime stage, copying only necessary artifacts from the builder stage.[1][5]",
+          "status": "done"
+        },
+        {
+          "id": 5,
+          "title": "Configure Docker Compose with Required Services",
+          "description": "Set up docker-compose.yml to orchestrate the application container and any additional services (e.g., databases).",
+          "dependencies": [
+            4
+          ],
+          "details": "Define services, specify build context, set up environment variables, volume mounts, and health checks as needed. Ensure the Python service uses the multi-stage Dockerfile and Python 3.11.",
+          "status": "done"
+        },
+        {
+          "id": 6,
+          "title": "Set Up Environment Variables Management",
+          "description": "Configure environment variable handling for both local development and Dockerized environments.",
+          "dependencies": [
+            5
+          ],
+          "details": "Define required environment variables in .env files and ensure they are referenced in Docker Compose and the application code. Document all variables.",
+          "status": "done"
+        },
+        {
+          "id": 7,
+          "title": "Implement Health Checks and Volume Mounts",
+          "description": "Add health check configurations and set up volume mounts for persistent data and live code reloading.",
+          "dependencies": [],
+          "details": "Configure healthcheck directives in docker-compose.yml for all relevant services. Set up volume mounts for source code and data directories as needed.",
+          "status": "done"
+        },
+        {
+          "id": 8,
+          "title": "Verify and Test Each Setup Component",
+          "description": "Individually verify the correct setup and operation of Git, Python 3.11, Poetry, Dockerfile, Docker Compose, environment variables, health checks, and volume mounts.",
+          "dependencies": [],
+          "details": "For each component: run status checks (e.g., 'git status', 'python --version', 'poetry check', 'docker build', 'docker-compose up'), confirm expected behavior, and document verification results.",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Implement FastAPI Backend Structure",
+      "description": "Set up the FastAPI backend structure with basic routing and configuration.",
+      "details": "1. Install FastAPI and dependencies using Poetry: `poetry add fastapi uvicorn[standard]`\n2. Create main.py with FastAPI app initialization\n3. Set up basic routing structure\n4. Implement CORS middleware\n5. Configure API versioning\n6. Implement rate limiting using FastAPI-limiter\n7. Set up environment-specific configurations",
+      "testStrategy": "1. Write unit tests for basic routing\n2. Test CORS functionality\n3. Verify rate limiting is working\n4. Ensure different environment configurations load correctly",
+      "priority": "high",
+      "dependencies": [
+        1
+      ],
+      "status": "done",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Dependency Installation",
+          "description": "Install all required dependencies for the backend project, including the web framework, middleware, and testing libraries.",
+          "dependencies": [],
+          "details": "Use the package manager (e.g., npm, pip) to install core dependencies such as the web server framework, CORS middleware, rate limiter, dotenv for environment configs, and testing tools.",
+          "status": "done"
+        },
+        {
+          "id": 2,
+          "title": "App Initialization",
+          "description": "Initialize the backend application structure and entry point.",
+          "dependencies": [
+            1
+          ],
+          "details": "Set up the main application file, configure the server to listen on a port, and ensure the project structure supports modular development.",
+          "status": "done"
+        },
+        {
+          "id": 3,
+          "title": "Routing Setup",
+          "description": "Configure routing for the API endpoints following RESTful conventions.",
+          "dependencies": [
+            2
+          ],
+          "details": "Define routes for resources using plural nouns and appropriate HTTP methods. Organize routes in separate modules if necessary.",
+          "status": "done"
+        },
+        {
+          "id": 4,
+          "title": "CORS Configuration",
+          "description": "Enable and configure Cross-Origin Resource Sharing (CORS) for the API.",
+          "dependencies": [
+            2
+          ],
+          "details": "Integrate CORS middleware and set up allowed origins, methods, and headers as needed for secure cross-origin requests.",
+          "status": "done"
+        },
+        {
+          "id": 5,
+          "title": "API Versioning",
+          "description": "Implement versioning for the API endpoints.",
+          "dependencies": [
+            3
+          ],
+          "details": "Prefix routes with version identifiers (e.g., /v1/) to support future changes without breaking existing clients.",
+          "status": "done"
+        },
+        {
+          "id": 6,
+          "title": "Rate Limiting Middleware",
+          "description": "Add and configure rate limiting to protect the API from excessive requests.",
+          "dependencies": [
+            2
+          ],
+          "details": "Integrate a rate limiting middleware and set thresholds for requests per time window to prevent abuse.",
+          "status": "done"
+        },
+        {
+          "id": 7,
+          "title": "Environment Configuration and Basic Test Coverage",
+          "description": "Set up environment variable management and implement basic test coverage for critical setup components.",
+          "dependencies": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+          ],
+          "details": "Use dotenv or similar to manage environment variables. Write and run basic tests to verify that routing, CORS, versioning, and rate limiting are correctly configured.\n<info added on 2025-06-15T00:06:26.555Z>\n## Implementation Improvements Made\n\n### Security & Production Readiness:\n- **Fixed CORS Configuration**: Changed from wildcard `allow_origins=[\"*\"]` to configurable origins via `ALLOWED_ORIGINS` environment variable\n- **Restricted HTTP Methods**: Limited to specific methods instead of `allow_methods=[\"*\"]`\n- **Environment-based Configuration**: CORS origins now configurable per environment\n\n### Modern FastAPI Practices:\n- **Upgraded to Lifespan Handlers**: Replaced deprecated `@app.on_event(\"startup\")` with modern `@asynccontextmanager` lifespan pattern\n- **Added Proper Error Handling**: Redis connection failures now gracefully degrade instead of crashing the app\n- **Added Logging**: Proper logging for rate limiter initialization status\n\n### Rate Limiting Strategy:\n- **Created Reusable Rate Limiting Utils**: `src/utils/rate_limiting.py` with different configurations for different endpoint types\n- **Removed Rate Limiting from Health Checks**: Health endpoints should not be rate limited for monitoring\n- **Flexible Rate Limiting**: Different limits for different endpoint types (strict, moderate, lenient)\n\n### Testing Improvements:\n- **Proper Test Structure**: Tests now verify actual functionality without complex mocking\n- **Simplified Test App**: Created dedicated test app for reliable testing\n- **Better Test Coverage**: Tests for both rate-limited and non-rate-limited endpoints\n\n### Configuration Management:\n- **Updated Environment Variables**: Added `ALLOWED_ORIGINS` and `ENVIRONMENT` settings\n- **Better Default Values**: Sensible defaults for development while allowing production customization\n\nThese changes address major security vulnerabilities, use modern FastAPI patterns, and create a more maintainable codebase for future development.\n</info added on 2025-06-15T00:06:26.555Z>",
+          "status": "done"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Setup Supabase Integration",
+      "description": "Integrate Supabase for PostgreSQL database and storage functionality.",
+      "status": "pending",
+      "dependencies": [
+        2
+      ],
+      "priority": "high",
+      "details": "1. Install Supabase Python client: `poetry add supabase`\n2. Set up Supabase project and obtain API keys\n3. Implement database connection using Supabase client\n4. Configure Supabase Storage for file storage\n5. Implement basic CRUD operations for database\n6. Set up row-level security policies in Supabase",
+      "testStrategy": "1. Test database connection\n2. Verify CRUD operations work correctly\n3. Ensure file upload and retrieval from Supabase Storage works\n4. Test row-level security policies",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Install Supabase Client Library",
+          "description": "Install the Supabase Python client library (v2.15.3) in your project using poetry.",
+          "dependencies": [],
+          "details": "Run `poetry add supabase` to add the Supabase Python client to your project.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Set Up Supabase Project",
+          "description": "Initialize a new Supabase project and obtain the necessary API keys.",
+          "dependencies": [
+            1
+          ],
+          "details": "Create a new project in the Supabase dashboard, then retrieve your project URL and anon/public API key for use in your Python application.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Establish Database Connection",
+          "description": "Configure the Supabase Python client to connect to your Supabase database instance.",
+          "dependencies": [
+            2
+          ],
+          "details": "Use your Supabase project URL and anon/public API key to create a client instance in your Python application code. Example: `client = create_client(supabase_url, supabase_key)`.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Configure Storage",
+          "description": "Set up and configure Supabase Storage for handling file uploads and downloads using the Python client.",
+          "dependencies": [
+            3
+          ],
+          "details": "Enable and configure storage buckets in the Supabase dashboard, and implement Python code to interact with Supabase Storage using the client's storage methods.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Implement CRUD Operations",
+          "description": "Develop Create, Read, Update, and Delete (CRUD) functionality using the Supabase Python client.",
+          "dependencies": [
+            3
+          ],
+          "details": "Use the Supabase Python client methods to interact with your database tables for CRUD operations. For example: `client.table('your_table').insert(data).execute()` for creating records.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Set Up Security Policies",
+          "description": "Configure Row Level Security (RLS) and other security policies for your Supabase database and storage.",
+          "dependencies": [
+            4,
+            5
+          ],
+          "details": "Define and enable RLS policies in the Supabase dashboard or via SQL migrations to control access to your data and storage resources. Test these policies with your Python client implementation.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Implement User Authentication",
+      "description": "Create user authentication system using Supabase authentication.",
+      "details": "1. Set up Supabase Authentication\n2. Implement sign-up and login endpoints\n3. Create JWT token generation and validation\n4. Implement user session management\n5. Create middleware for protected routes",
+      "testStrategy": "1. Test user registration process\n2. Verify login functionality\n3. Ensure JWT tokens are properly generated and validated\n4. Test protected routes with and without valid tokens",
+      "priority": "high",
+      "dependencies": [
+        3
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Supabase Authentication Setup",
+          "description": "Initialize Supabase in the project and configure authentication providers (email/password, OAuth, etc.) as needed.",
+          "dependencies": [],
+          "details": "Set up a new Supabase project, connect it to your app, and enable the desired authentication methods using the Supabase dashboard and client SDKs.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Endpoint Creation for Auth Actions",
+          "description": "Create API endpoints for user registration, login, logout, and profile management using Supabase Auth SDK.",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement endpoints that interact with Supabase Auth for sign-up, sign-in, sign-out, and user profile retrieval or updates.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "JWT Handling",
+          "description": "Implement logic to handle JSON Web Tokens (JWTs) issued by Supabase for authenticated users.",
+          "dependencies": [
+            2
+          ],
+          "details": "Extract, validate, and securely store JWTs on the client side. Ensure tokens are sent with requests to protected endpoints and handle token refresh if needed.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Session Management",
+          "description": "Manage user sessions using Supabase Auth session utilities and handle session persistence and expiration.",
+          "dependencies": [
+            3
+          ],
+          "details": "Use Supabase's session management features to track user authentication state, persist sessions across reloads, and handle session expiration or renewal.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Middleware for Protected Routes",
+          "description": "Develop middleware to protect API routes by verifying JWTs and user authentication status.",
+          "dependencies": [
+            4
+          ],
+          "details": "Implement server-side middleware that checks for valid JWTs in incoming requests and restricts access to protected resources based on authentication and authorization.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Testing Protected Routes",
+          "description": "Write and execute tests to verify that protected routes are accessible only to authenticated users and that unauthorized access is properly blocked.",
+          "dependencies": [
+            5
+          ],
+          "details": "Create automated tests to simulate authenticated and unauthenticated requests, ensuring that middleware and session management work as intended.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Setup Redis and Celery Integration",
+      "description": "Integrate Redis as a message broker and Celery for background job processing.",
+      "details": "1. Install Redis and Celery: `poetry add redis celery`\n2. Configure Redis connection in FastAPI app\n3. Set up Celery app with Redis as broker\n4. Create basic task structure for background jobs\n5. Implement Celery worker in Docker setup",
+      "testStrategy": "1. Verify Redis connection\n2. Test Celery task execution\n3. Ensure background jobs are properly queued and processed",
+      "priority": "high",
+      "dependencies": [
+        2
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Install and Configure Redis",
+          "description": "Set up Redis as the message broker and result backend for Celery. Ensure Redis is running and accessible, either locally or via Docker.",
+          "dependencies": [],
+          "details": "Install Redis on your system or include it as a service in your Docker Compose file. Verify connectivity on the default port (6379).",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Install and Set Up Celery",
+          "description": "Install Celery and configure it to use Redis as both the broker and backend. Ensure Celery can connect to the running Redis instance.",
+          "dependencies": [
+            1
+          ],
+          "details": "Add Celery and redis-py to your requirements, then configure Celery in your Python code with the appropriate Redis URLs for broker and backend.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Integrate Celery with FastAPI",
+          "description": "Connect Celery to your FastAPI application, enabling FastAPI endpoints to trigger Celery tasks asynchronously.",
+          "dependencies": [
+            2
+          ],
+          "details": "Import and initialize Celery in your FastAPI app. Create example tasks and expose endpoints that enqueue these tasks.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Design Task Structure",
+          "description": "Define and organize Celery tasks, ensuring clear separation between task definitions and FastAPI route handlers.",
+          "dependencies": [
+            3
+          ],
+          "details": "Create a dedicated tasks module or file. Implement sample tasks (e.g., background email sending, data processing) and ensure they are registered with Celery.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Configure Docker for FastAPI, Celery Worker, and Redis",
+          "description": "Set up Docker Compose to orchestrate FastAPI, Celery worker, and Redis services, ensuring proper networking and environment configuration.",
+          "dependencies": [
+            4
+          ],
+          "details": "Write Dockerfiles and a docker-compose.yml file to build and run all services. Verify inter-service communication and test the full asynchronous workflow.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Implement Gmail OAuth2 Authentication",
+      "description": "Create Gmail OAuth2 flow for secure email access.",
+      "details": "1. Set up Google Cloud project and enable Gmail API\n2. Install Google Auth library: `poetry add google-auth google-auth-oauthlib google-auth-httplib2`\n3. Implement OAuth2 flow initiation endpoint\n4. Create callback endpoint for handling OAuth2 response\n5. Implement secure token storage in Supabase (encrypted)\n6. Create token refresh mechanism",
+      "testStrategy": "1. Test OAuth2 flow initiation\n2. Verify callback handling and token storage\n3. Test token refresh functionality\n4. Ensure tokens are properly encrypted at rest",
+      "priority": "high",
+      "dependencies": [
+        4
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Google Cloud Console Project Setup",
+          "description": "Create and configure a new project in the Google Cloud Console. Enable required APIs and generate OAuth2 credentials (client ID and secret) following security best practices.",
+          "dependencies": [],
+          "details": "Ensure that only necessary APIs are enabled, restrict credentials to trusted origins, and follow Google Cloud's security recommendations for credential management.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Library Installation and Environment Preparation",
+          "description": "Install necessary libraries and SDKs for OAuth2 integration and Google Cloud API access in the development environment.",
+          "dependencies": [
+            1
+          ],
+          "details": "Use official libraries (e.g., google-auth, google-api-python-client) and ensure all dependencies are up to date. Set up environment variables for sensitive data.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Initiate OAuth2 Authorization Flow",
+          "description": "Implement the OAuth2 authorization code flow initiation, redirecting users to the Google consent screen with the correct scopes and redirect URI.",
+          "dependencies": [
+            2
+          ],
+          "details": "Ensure the client_id and redirect_uri match those configured in the Google Cloud Console. Use HTTPS for all endpoints and log all authorization attempts securely.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Handle OAuth2 Callback and Token Exchange",
+          "description": "Implement the callback endpoint to handle the authorization code returned by Google, exchanging it for access and refresh tokens securely.",
+          "dependencies": [
+            3
+          ],
+          "details": "Validate the state parameter to prevent CSRF attacks. Use secure HTTPS endpoints and handle errors gracefully, logging failures for audit purposes.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Secure Token Storage Implementation",
+          "description": "Design and implement secure storage for access and refresh tokens, following best practices to prevent unauthorized access or leakage.",
+          "dependencies": [
+            4
+          ],
+          "details": "Encrypt tokens at rest, restrict access to storage, and avoid exposing tokens in logs or client-side code. Rotate and revoke tokens as needed.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Token Refresh and Error Handling Mechanism",
+          "description": "Implement logic to refresh access tokens using the refresh token and handle token expiration or revocation errors securely.",
+          "dependencies": [
+            5
+          ],
+          "details": "Automatically refresh tokens before expiration, handle refresh failures by prompting re-authentication, and log all token-related errors securely.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Implement Email Polling Service",
+      "description": "Create a Celery task for polling emails every 5-15 minutes.",
+      "details": "1. Implement Celery task for email polling\n2. Use Gmail API to fetch new emails\n3. Filter emails for invoice attachments\n4. Download attachments to Supabase Storage\n5. Enqueue OCR job for each attachment\n6. Implement error handling and retries",
+      "testStrategy": "1. Test email fetching with mock Gmail API\n2. Verify correct filtering of invoice attachments\n3. Ensure attachments are properly stored\n4. Test OCR job enqueuing\n5. Verify error handling and retry mechanism",
+      "priority": "medium",
+      "dependencies": [
+        5,
+        6
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Celery Task Creation",
+          "description": "Design and implement Celery tasks to handle the workflow, ensuring tasks are short, idempotent, and follow best practices for background processing.",
+          "dependencies": [],
+          "details": "Define modular Celery tasks for each processing step, avoiding long-running or monolithic tasks. Ensure tasks are atomic and can be retried safely if needed.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Gmail API Integration",
+          "description": "Integrate with the Gmail API to fetch emails and their attachments programmatically.",
+          "dependencies": [
+            1
+          ],
+          "details": "Set up authentication and implement logic to connect to Gmail, retrieve messages, and extract attachments for further processing.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Attachment Filtering",
+          "description": "Filter email attachments based on predefined criteria such as file type, size, or content.",
+          "dependencies": [
+            2
+          ],
+          "details": "Implement logic to select only relevant attachments (e.g., PDFs, images) and discard or skip others before uploading or processing.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Storage Upload",
+          "description": "Upload filtered attachments to a designated storage service (e.g., AWS S3, Google Cloud Storage).",
+          "dependencies": [
+            3
+          ],
+          "details": "Implement secure and efficient file upload logic, ensuring files are stored with appropriate metadata and access controls.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "OCR Job Enqueuing",
+          "description": "Enqueue OCR processing jobs for each uploaded attachment using Celery.",
+          "dependencies": [
+            4
+          ],
+          "details": "Create Celery tasks to trigger OCR processing on stored files, passing necessary file references and parameters.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Error Handling",
+          "description": "Implement robust error handling and logging throughout the workflow to manage failures and retries.",
+          "dependencies": [
+            1,
+            2,
+            3,
+            4,
+            5
+          ],
+          "details": "Add try/except blocks, logging, and retry mechanisms to each step, ensuring errors are captured, reported, and do not halt the entire pipeline.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Setup Tesseract OCR Integration",
+      "description": "Integrate Tesseract OCR for invoice data extraction.",
+      "details": "1. Install Tesseract OCR and Python binding: `poetry add pytesseract`\n2. Set up Tesseract in Docker container\n3. Create OCR processing function\n4. Implement image preprocessing for better OCR results\n5. Extract key invoice data (date, vendor, total, line items)\n6. Implement error handling and logging",
+      "testStrategy": "1. Test OCR processing with sample invoices\n2. Verify accuracy of extracted data\n3. Test with various invoice formats and layouts\n4. Ensure proper error handling and logging",
+      "priority": "high",
+      "dependencies": [
+        5
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Tesseract Installation in Docker",
+          "description": "Set up a Docker environment with Tesseract OCR installed, ensuring all necessary language packs and dependencies are included.",
+          "dependencies": [],
+          "details": "Create a Dockerfile based on a suitable base image (e.g., python:3.12-slim-bookworm). Install Tesseract OCR and required language packs using package managers (apt or apk). Verify Tesseract is accessible within the container.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Python Environment and OCR Library Setup",
+          "description": "Install Python libraries for OCR and image processing inside the Docker container.",
+          "dependencies": [
+            1
+          ],
+          "details": "Install pytesseract, pdf2image, and other necessary Python packages using pip within the Dockerfile. Ensure the environment is ready for OCR operations.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Image Preprocessing Module",
+          "description": "Develop image preprocessing functions to enhance OCR accuracy, handling various image formats and quality issues.",
+          "dependencies": [
+            2
+          ],
+          "details": "Implement preprocessing steps such as grayscale conversion, thresholding, resizing, denoising, and format normalization. Ensure compatibility with common invoice image formats (JPEG, PNG, PDF).",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "OCR Function Creation",
+          "description": "Create a robust OCR function that leverages Tesseract to extract text from preprocessed images.",
+          "dependencies": [
+            3
+          ],
+          "details": "Integrate pytesseract with the preprocessing module. Ensure the function can handle batch processing and return raw OCR results for further parsing.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Structured Data Extraction for Invoices",
+          "description": "Develop logic to parse OCR output and extract structured invoice data: date, vendor, total, and line items.",
+          "dependencies": [
+            4
+          ],
+          "details": "Use regular expressions and/or NLP techniques to identify and extract key invoice fields from OCR text. Structure the output as a JSON object.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Error Handling and Logging Setup",
+          "description": "Implement comprehensive error handling and logging for all stages: image loading, preprocessing, OCR, and data extraction.",
+          "dependencies": [
+            5
+          ],
+          "details": "Add try/except blocks, log errors and warnings, and handle unsupported or corrupted image formats gracefully. Ensure logs are accessible for debugging within Docker.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Implement Invoice Data Model",
+      "description": "Create data models for invoices and line items in the database.",
+      "details": "1. Define Invoice model with fields: id, user_id, source, invoice_date, vendor, total_amount, status, file_path, created_at, updated_at\n2. Define LineItem model with fields: id, invoice_id, description, quantity, unit_price, total_price\n3. Implement database migrations for these models\n4. Create indexes for frequently queried fields\n5. Implement model methods for common operations",
+      "testStrategy": "1. Verify database schema matches the defined models\n2. Test model creation and querying\n3. Ensure indexes are properly created\n4. Test model methods for accuracy",
+      "priority": "medium",
+      "dependencies": [
+        3
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Define Data Models",
+          "description": "Design and specify the data models, including entities, attributes, and relationships, ensuring normalization and clarity.",
+          "dependencies": [],
+          "details": "Identify all necessary entities and their relationships based on business requirements. Apply normalization principles to reduce redundancy and ensure data integrity.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Create Migration Scripts",
+          "description": "Develop migration scripts to create and update database schemas according to the defined data models.",
+          "dependencies": [
+            1
+          ],
+          "details": "Write scripts that generate tables, columns, and relationships as per the model definitions. Ensure scripts are idempotent and support versioning for future changes.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Implement Index Creation",
+          "description": "Design and implement indexes to optimize query performance based on expected access patterns.",
+          "dependencies": [
+            2
+          ],
+          "details": "Analyze query requirements and add appropriate indexes to tables. Consider primary keys, foreign keys, and frequently queried columns.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Develop Model Methods",
+          "description": "Implement methods on the data models for common operations such as create, read, update, and delete (CRUD).",
+          "dependencies": [
+            1
+          ],
+          "details": "Define and code reusable functions or methods for interacting with the data models, ensuring encapsulation of business logic.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Implement Schema Validation",
+          "description": "Set up schema validation to enforce data integrity and correctness at the application or database level.",
+          "dependencies": [
+            1
+          ],
+          "details": "Define validation rules for each model attribute, such as data types, required fields, and value constraints. Integrate validation into model methods and/or database constraints.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Implement OCR Data Persistence",
+      "description": "Create a service to persist extracted OCR data to the database.",
+      "details": "1. Create a service to handle OCR data persistence\n2. Implement data validation and cleaning\n3. Map extracted data to Invoice and LineItem models\n4. Handle potential duplicates\n5. Implement error handling and logging",
+      "testStrategy": "1. Test data persistence with sample OCR output\n2. Verify data validation and cleaning\n3. Test duplicate handling\n4. Ensure proper error logging",
+      "priority": "medium",
+      "dependencies": [
+        8,
+        9
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Service Creation",
+          "description": "Design and implement the core service responsible for persisting extracted data, providing interfaces for validation, mapping, duplicate handling, and error/logging.",
+          "dependencies": [],
+          "details": "Define service boundaries, responsibilities, and interfaces. Ensure the service can be easily extended for future requirements.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Data Validation Implementation",
+          "description": "Develop robust validation logic to ensure incoming data meets required formats, types, and business rules before processing.",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement validation checks for data completeness, type safety, and business constraints. Integrate validation into the service workflow.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Mapping to Models",
+          "description": "Map validated data to internal domain models or entities for persistence.",
+          "dependencies": [
+            2
+          ],
+          "details": "Define model schemas and implement mapping logic to convert validated input into model instances suitable for storage.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Duplicate Handling",
+          "description": "Implement mechanisms to detect and handle duplicate data entries during the persistence process.",
+          "dependencies": [
+            3
+          ],
+          "details": "Design duplicate detection strategies (e.g., unique constraints, hash checks) and define resolution policies (skip, update, merge, etc.).",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Error and Logging Implementation",
+          "description": "Integrate comprehensive error handling and logging throughout the service to capture validation failures, mapping issues, duplicate conflicts, and persistence errors.",
+          "dependencies": [
+            4
+          ],
+          "details": "Set up structured logging and error reporting. Ensure all failure points are logged with sufficient detail for troubleshooting and auditing.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Implement Invoice Management API Endpoints",
+      "description": "Create API endpoints for invoice management operations.",
+      "details": "1. Implement GET /invoices endpoint with pagination, filtering, and sorting\n2. Create GET /invoices/{id} endpoint for single invoice details\n3. Implement PUT /invoices/{id} for manual corrections\n4. Create DELETE /invoices/{id} endpoint\n5. Implement input validation and sanitization\n6. Add appropriate error handling",
+      "testStrategy": "1. Test each endpoint for correct functionality\n2. Verify pagination, filtering, and sorting work correctly\n3. Test input validation and error handling\n4. Ensure proper authorization checks",
+      "priority": "medium",
+      "dependencies": [
+        9,
+        10
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Design List Endpoint",
+          "description": "Create a RESTful endpoint to retrieve a paginated and filterable list of resources, following best practices for naming and HTTP method usage.",
+          "dependencies": [],
+          "details": "Use GET /api/resources with support for pagination and filtering parameters. Ensure endpoint uses plural nouns and clear naming conventions.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Design Detail Endpoint",
+          "description": "Implement an endpoint to retrieve the details of a single resource by its unique identifier.",
+          "dependencies": [
+            1
+          ],
+          "details": "Use GET /api/resources/{id} to fetch a specific resource. Ensure proper error handling for not found cases.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Design Update Endpoint",
+          "description": "Create an endpoint to update an existing resource, supporting both full and partial updates as appropriate.",
+          "dependencies": [
+            2
+          ],
+          "details": "Use PUT or PATCH /api/resources/{id} for updates. Validate input and handle errors for invalid or missing data.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Design Delete Endpoint",
+          "description": "Develop an endpoint to delete a resource by its unique identifier, ensuring proper response codes and error handling.",
+          "dependencies": [
+            3
+          ],
+          "details": "Use DELETE /api/resources/{id}. Return appropriate status codes for success and handle cases where the resource does not exist.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Implement Input Validation",
+          "description": "Add input validation for all endpoints to ensure data integrity and prevent invalid requests.",
+          "dependencies": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "details": "Validate request bodies and query parameters for required fields, types, and constraints. Return clear error messages for validation failures.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Implement Error Handling",
+          "description": "Integrate comprehensive error handling across all endpoints to provide consistent and informative error responses.",
+          "dependencies": [
+            5
+          ],
+          "details": "Standardize error response formats, handle common error scenarios (e.g., 400, 404, 500), and ensure errors are logged for monitoring.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Implement CSV Export Functionality",
+      "description": "Create a service and API endpoint for exporting invoice data to CSV format.",
+      "details": "1. Implement CSV generation service\n2. Create POST /export/csv endpoint\n3. Handle large datasets with streaming response\n4. Implement proper error handling\n5. Add export tracking to Invoice model",
+      "testStrategy": "1. Test CSV generation with various datasets\n2. Verify CSV format correctness\n3. Test large dataset handling\n4. Ensure proper error responses",
+      "priority": "medium",
+      "dependencies": [
+        11
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Design CSV Generation Logic",
+          "description": "Define the structure and formatting rules for CSV export, ensuring data integrity, consistent delimiters, proper text qualifiers, and UTF-8 encoding.",
+          "dependencies": [],
+          "details": "Incorporate best practices such as double-checking delimiters, maintaining consistent column structure, and validating data before export to avoid common CSV formatting errors.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Implement Streaming for Large Datasets",
+          "description": "Develop a memory-efficient streaming mechanism for exporting large datasets to CSV, avoiding loading all data into memory at once.",
+          "dependencies": [
+            1
+          ],
+          "details": "Utilize techniques such as generators or chunked processing to handle large files, ensuring scalability and preventing out-of-memory errors.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Create Export API Endpoint",
+          "description": "Develop an API endpoint that initiates the CSV export process and streams the file to the client.",
+          "dependencies": [
+            2
+          ],
+          "details": "Ensure the endpoint supports streaming responses and can handle long-running export operations for large datasets.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Implement Robust Error Handling",
+          "description": "Add comprehensive error handling throughout the export process, including data validation, streaming failures, and file formatting issues.",
+          "dependencies": [
+            3
+          ],
+          "details": "Log errors, return meaningful error messages to the client, and ensure partial exports do not result in corrupted files.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Develop Export Tracking and Status Reporting",
+          "description": "Implement a mechanism to track export progress and provide status updates or completion notifications to users.",
+          "dependencies": [
+            4
+          ],
+          "details": "Store export job metadata, allow users to query export status, and handle retries or resumptions if necessary.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Implement QuickBooks API Integration",
+      "description": "Integrate QuickBooks API for invoice export functionality.",
+      "details": "1. Set up QuickBooks Developer account\n2. Install QuickBooks Python SDK: `poetry add python-quickbooks`\n3. Implement OAuth flow for QuickBooks connection\n4. Create POST /integrations/quickbooks/connect endpoint\n5. Implement POST /integrations/quickbooks/export endpoint\n6. Handle data mapping between Invoice model and QuickBooks Invoice\n7. Implement duplicate checking mechanism",
+      "testStrategy": "1. Test QuickBooks OAuth flow\n2. Verify correct data mapping\n3. Test export functionality with sample invoices\n4. Ensure duplicate entries are avoided",
+      "priority": "medium",
+      "dependencies": [
+        11
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "QuickBooks Developer Account Setup",
+          "description": "Create an Intuit developer account and set up a new QuickBooks application for integration.",
+          "dependencies": [],
+          "details": "Sign up at developer.intuit.com, fill out the required forms, confirm your email, and create a new app in the developer dashboard. Configure app details, select appropriate scopes, and obtain client credentials (Client ID and Client Secret).",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "SDK Installation",
+          "description": "Install the official QuickBooks SDK for your development environment.",
+          "dependencies": [
+            1
+          ],
+          "details": "Choose the SDK matching your programming language (e.g., .NET, Java, PHP, Node.js, Python, Ruby) and install it using the recommended package manager or download method.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "OAuth Flow Implementation",
+          "description": "Implement OAuth 2.0 authentication to securely connect to QuickBooks Online.",
+          "dependencies": [
+            2
+          ],
+          "details": "Configure OAuth 2.0 credentials in your app, set up redirect URIs, and use the SDK's OAuth client to handle authorization code exchange and token management. Test the flow using the OAuth Playground or sandbox environment.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Connect Endpoint Development",
+          "description": "Develop the endpoint that initiates the QuickBooks connection and handles user authorization.",
+          "dependencies": [
+            3
+          ],
+          "details": "Create an endpoint that redirects users to QuickBooks' authorization page and processes the callback to store access tokens securely.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Export Endpoint Development",
+          "description": "Develop the endpoint responsible for exporting invoice data to QuickBooks.",
+          "dependencies": [
+            4
+          ],
+          "details": "Implement logic to receive invoice data, authenticate API requests using stored tokens, and send data to QuickBooks using the SDK.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Data Mapping Between Invoice Models and QuickBooks Entities",
+          "description": "Map your application's invoice data model to QuickBooks' invoice entity structure.",
+          "dependencies": [
+            5
+          ],
+          "details": "Analyze both data models, define field mappings, handle required/optional fields, and transform data as needed to match QuickBooks' API requirements.",
+          "status": "pending"
+        },
+        {
+          "id": 7,
+          "title": "Duplicate Checking and Prevention",
+          "description": "Implement mechanisms to detect and prevent duplicate invoice exports to QuickBooks.",
+          "dependencies": [],
+          "details": "Before exporting, check for existing invoices in QuickBooks using unique identifiers or matching criteria. Prevent duplicates by skipping or updating existing records as appropriate.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Implement Integration Status Endpoint",
+      "description": "Create an API endpoint to check the status of integrations.",
+      "details": "1. Implement GET /integrations/status endpoint\n2. Check and return status of Gmail connection\n3. Check and return status of QuickBooks connection\n4. Implement error handling for failed connections",
+      "testStrategy": "1. Test status retrieval for connected and disconnected states\n2. Verify correct error handling\n3. Ensure proper authorization checks",
+      "priority": "low",
+      "dependencies": [
+        13
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 15,
+      "title": "Setup Next.js Frontend Project",
+      "description": "Initialize and configure the Next.js frontend project with TypeScript.",
+      "details": "1. Create Next.js project: `npx create-next-app@latest --typescript`\n2. Set up project structure (pages, components, styles)\n3. Configure TypeScript\n4. Set up API client for backend communication\n5. Implement basic routing\n6. Set up environment variable handling",
+      "testStrategy": "1. Verify TypeScript compilation\n2. Test basic routing functionality\n3. Ensure API client can communicate with backend\n4. Check environment variable loading",
+      "priority": "high",
+      "dependencies": [],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Project Initialization",
+          "description": "Set up the initial frontend project using a modern build tool (e.g., Vite) to ensure fast development and optimized builds.",
+          "dependencies": [],
+          "details": "Run the appropriate command to scaffold a new project, select the framework (React, Vue, etc.), and initialize version control.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Structure Setup",
+          "description": "Establish a robust folder and file structure for the frontend application to support scalability and maintainability.",
+          "dependencies": [
+            1
+          ],
+          "details": "Create directories for components, pages, assets, utilities, and other relevant modules following best practices for front-end architecture.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "TypeScript Configuration",
+          "description": "Configure TypeScript for static type checking and improved developer experience.",
+          "dependencies": [
+            1
+          ],
+          "details": "Install TypeScript, generate a tsconfig.json, and adjust compiler options for the project's needs. Optionally, set up ESLint for code quality.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "API Client Setup",
+          "description": "Implement an API client to handle communication with backend services.",
+          "dependencies": [
+            2,
+            3
+          ],
+          "details": "Choose or create an HTTP client (e.g., Axios, Fetch wrapper), set up base configuration, and organize API endpoint modules.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Routing Configuration",
+          "description": "Set up client-side routing to enable navigation between different views or pages.",
+          "dependencies": [
+            2,
+            3
+          ],
+          "details": "Install and configure a routing library (e.g., React Router, Vue Router), define route structures, and implement navigation components.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Environment Variable Handling",
+          "description": "Configure environment variable management for secure and flexible configuration.",
+          "dependencies": [
+            1
+          ],
+          "details": "Set up .env files, configure the build tool to load environment variables, and document usage for API keys, endpoints, and other sensitive data.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Implement User Authentication UI",
+      "description": "Create user interface components for authentication flow.",
+      "details": "1. Create login page component\n2. Implement registration page\n3. Create authenticated user context\n4. Implement protected route HOC\n5. Add logout functionality\n6. Implement token refresh mechanism",
+      "testStrategy": "1. Test login flow\n2. Verify registration process\n3. Ensure protected routes are not accessible without authentication\n4. Test logout functionality\n5. Verify token refresh works correctly",
+      "priority": "high",
+      "dependencies": [
+        15
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement Login Page",
+          "description": "Create a login page UI that allows users to enter their credentials and triggers the authentication process, handling form state and error feedback.",
+          "dependencies": [],
+          "details": "Design a form with username and password fields. On submit, call the authentication API and handle the response, storing tokens as needed.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Implement Registration Page",
+          "description": "Develop a registration page where new users can sign up by providing required information, with validation and feedback.",
+          "dependencies": [],
+          "details": "Build a form for user registration. On submit, send data to the registration API and handle success or error responses appropriately.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Create User Context",
+          "description": "Set up a React context to manage and provide user authentication state and actions (login, logout, token storage) throughout the app.",
+          "dependencies": [
+            1,
+            2
+          ],
+          "details": "Implement a context provider that stores user info and tokens, exposes login/logout methods, and persists state across reloads.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Develop Protected Route HOC",
+          "description": "Create a higher-order component (HOC) or wrapper to restrict access to certain routes based on authentication state from User Context.",
+          "dependencies": [
+            3
+          ],
+          "details": "Ensure only authenticated users can access protected routes, redirecting unauthenticated users to the login page.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Implement Logout Functionality",
+          "description": "Add a logout mechanism that clears user authentication state and tokens, updating the UI and redirecting as needed.",
+          "dependencies": [
+            3
+          ],
+          "details": "Provide a logout button or menu item that, when clicked, resets the User Context and navigates the user to a public page.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Build Token Refresh UI",
+          "description": "Design and implement UI and logic to handle token refresh, ensuring seamless user experience when tokens expire.",
+          "dependencies": [
+            3
+          ],
+          "details": "Detect token expiration, trigger refresh flow, and update User Context with new tokens. Optionally, show loading or error states during refresh.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Implement Invoice Dashboard UI",
+      "description": "Create the main dashboard for displaying and managing invoices.",
+      "details": "1. Create dashboard layout component\n2. Implement invoice list component with pagination\n3. Add search and filter functionality\n4. Create invoice detail view component\n5. Implement manual correction UI\n6. Add delete invoice functionality",
+      "testStrategy": "1. Test invoice list rendering and pagination\n2. Verify search and filter functionality\n3. Test invoice detail view\n4. Ensure manual corrections are saved correctly\n5. Test delete functionality",
+      "priority": "medium",
+      "dependencies": [
+        16
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Design Dashboard Layout",
+          "description": "Create the main dashboard layout that serves as the entry point for users, displaying key metrics and navigation to other features.",
+          "dependencies": [],
+          "details": "The dashboard should provide a clear overview of financial data, use modern UI principles, and offer intuitive navigation to invoice lists and other sections.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Implement Invoice List Component",
+          "description": "Develop a component to display a list of invoices, showing essential details such as invoice number, date, amount, and status.",
+          "dependencies": [
+            1
+          ],
+          "details": "Ensure the list is visually accessible, supports pagination or infinite scroll, and integrates seamlessly with the dashboard layout.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Add Search and Filter Functionality",
+          "description": "Enable users to search and filter invoices based on criteria such as date, status, or amount.",
+          "dependencies": [
+            2
+          ],
+          "details": "Implement dynamic filtering and search input fields, updating the invoice list in real time as users interact with the controls.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Develop Invoice Detail View",
+          "description": "Create a detailed view for individual invoices, displaying all relevant information and actions.",
+          "dependencies": [
+            2
+          ],
+          "details": "Allow users to click on an invoice from the list to view its full details, including line items, payment history, and customer information.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Build Manual Correction UI",
+          "description": "Design and implement a user interface for manually correcting invoice data.",
+          "dependencies": [
+            4
+          ],
+          "details": "Provide editable fields and validation for users to update invoice details, with clear feedback and save/cancel options.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Implement Delete Functionality",
+          "description": "Add the ability for users to delete invoices from the system, with appropriate confirmation dialogs.",
+          "dependencies": [
+            2
+          ],
+          "details": "Ensure deletion is secure, provides user confirmation, and updates the invoice list and dashboard metrics accordingly.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Implement Gmail Connection UI",
+      "description": "Create user interface for connecting Gmail account.",
+      "details": "1. Create Gmail connection page\n2. Implement OAuth flow initiation\n3. Handle OAuth callback\n4. Display connection status\n5. Implement disconnect functionality",
+      "testStrategy": "1. Test OAuth flow initiation\n2. Verify callback handling\n3. Ensure connection status is correctly displayed\n4. Test disconnect functionality",
+      "priority": "medium",
+      "dependencies": [
+        16
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Design Connection Page UI",
+          "description": "Create a user interface page where users can initiate OAuth connection, view connection status, and disconnect if needed.",
+          "dependencies": [],
+          "details": "The connection page should include a button to start the OAuth flow, display current connection status (connected/disconnected), and provide a disconnect option.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Implement OAuth Initiation Logic",
+          "description": "Develop frontend logic to initiate the OAuth 2.0 authorization flow by redirecting users to the OAuth provider's authorization endpoint.",
+          "dependencies": [
+            1
+          ],
+          "details": "Generate a CSRF token (state parameter) for security, store it locally, and redirect the user to the OAuth provider with required query parameters such as client_id, redirect_uri, scope, response_type=code, and state as per OAuth 2.0 standards.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Handle OAuth Callback",
+          "description": "Implement backend or frontend logic to handle the OAuth provider's callback with authorization code or error response.",
+          "dependencies": [
+            2
+          ],
+          "details": "Parse the query parameters from the callback URL to extract the authorization code or error. Validate the state parameter against the stored CSRF token to prevent CSRF attacks. Exchange the authorization code for access and refresh tokens as needed.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Display OAuth Connection Status",
+          "description": "Show the current OAuth connection status on the connection page to inform the user if they are connected or disconnected.",
+          "dependencies": [
+            3
+          ],
+          "details": "Use stored tokens or session information to determine if the user is connected. Update the UI dynamically to reflect the connection status and provide feedback on successful connection or errors.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Implement Disconnect Functionality",
+          "description": "Allow users to disconnect the OAuth connection, revoking tokens and clearing stored credentials.",
+          "dependencies": [
+            4
+          ],
+          "details": "Provide a disconnect button that clears stored tokens and session data related to the OAuth connection. Optionally, call the OAuth provider's token revocation endpoint to invalidate tokens.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Implement QuickBooks Integration UI",
+      "description": "Create user interface for QuickBooks integration and export.",
+      "details": "1. Create QuickBooks connection page\n2. Implement OAuth flow for QuickBooks\n3. Add export to QuickBooks functionality in dashboard\n4. Display export status and history\n5. Implement error handling and user feedback",
+      "testStrategy": "1. Test QuickBooks OAuth flow\n2. Verify export functionality\n3. Ensure export status is correctly displayed\n4. Test error handling and user feedback",
+      "priority": "medium",
+      "dependencies": [
+        17
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Design Connection Page UI",
+          "description": "Create a user interface that allows users to initiate and manage connections to the financial service, ensuring clarity and simplicity to accommodate varying user expertise.",
+          "dependencies": [],
+          "details": "The connection page should use progressive disclosure to avoid overwhelming users, presenting only essential information and actions initially. It must also communicate security and privacy considerations to build trust.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Implement OAuth Flow",
+          "description": "Integrate the OAuth authentication process to securely connect user accounts with the financial service, handling redirects, token management, and consent screens.",
+          "dependencies": [
+            1
+          ],
+          "details": "Ensure the OAuth flow is seamless and clearly communicates each step to the user, including permissions requested and any potential security implications.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Develop Export Functionality",
+          "description": "Enable users to export their financial data or transactions from the connected service, providing options for format and scope.",
+          "dependencies": [
+            2
+          ],
+          "details": "The export feature should be accessible from the UI, with clear feedback on export progress and completion. Consider user privacy and data security during export.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Build Status and History Display",
+          "description": "Create a UI component that displays the status of current operations (e.g., connection, export) and a history of past actions for transparency and troubleshooting.",
+          "dependencies": [
+            3
+          ],
+          "details": "Use clear, concise language and visual cues to indicate operation status. Allow users to review past exports, connection attempts, and any errors encountered.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Implement Error Handling and User Feedback",
+          "description": "Develop robust error handling throughout all flows, providing users with actionable, understandable feedback and guidance for resolution.",
+          "dependencies": [
+            4
+          ],
+          "details": "Ensure error messages are user-friendly and avoid technical jargon. Offer suggestions or next steps when possible, and log errors for support and monitoring.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Implement CSV Export UI",
+      "description": "Add CSV export functionality to the dashboard.",
+      "details": "1. Add CSV export button to dashboard\n2. Implement export request handling\n3. Add download functionality for generated CSV\n4. Display export status and history\n5. Implement error handling",
+      "testStrategy": "1. Test CSV export request\n2. Verify download functionality\n3. Ensure export status is correctly displayed\n4. Test error handling",
+      "priority": "low",
+      "dependencies": [
+        17
+      ],
+      "status": "pending",
+      "subtasks": []
+    },
+    {
+      "id": 21,
+      "title": "Setup CI/CD Pipeline with GitHub Actions",
+      "description": "Implement Continuous Integration and Deployment pipeline using GitHub Actions.",
+      "details": "1. Create GitHub Actions workflow file\n2. Set up automated testing for backend and frontend\n3. Implement Docker image building and pushing\n4. Configure deployment to Vercel (frontend) and Render (backend)\n5. Set up environment-specific configurations\n6. Implement database migration step",
+      "testStrategy": "1. Verify automated tests run on push and pull requests\n2. Ensure Docker images are correctly built and pushed\n3. Test deployment to staging environment\n4. Verify database migrations are applied correctly",
+      "priority": "high",
+      "dependencies": [
+        1,
+        2,
+        15
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Create CI/CD Workflow File",
+          "description": "Define and create the CI/CD workflow configuration file that orchestrates the entire pipeline including build, test, and deploy stages.",
+          "dependencies": [],
+          "details": "Write a YAML or equivalent workflow file specifying triggers (e.g., on commit or pull request), jobs for backend and frontend tests, Docker build and push, deployment steps, and migration handling.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Implement Backend Automated Tests",
+          "description": "Develop and integrate automated tests for backend services to ensure code quality and functionality before deployment.",
+          "dependencies": [
+            1
+          ],
+          "details": "Write unit, integration, and possibly end-to-end tests for backend code. Configure the CI workflow to run these tests automatically on code changes.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Implement Frontend Automated Tests",
+          "description": "Develop and integrate automated tests for frontend applications to verify UI and functionality.",
+          "dependencies": [
+            1
+          ],
+          "details": "Create unit and UI tests for frontend code. Integrate these tests into the CI workflow to run on every commit or pull request.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Docker Image Build and Push",
+          "description": "Build Docker images for backend and frontend services and push them to a container registry.",
+          "dependencies": [
+            2,
+            3
+          ],
+          "details": "Configure the CI workflow to build Docker images after successful tests, tag them appropriately, and push to a Docker registry for deployment use.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Configure Deployment to Render and Vercel",
+          "description": "Set up deployment configurations and automate deployment of backend services to Render and frontend to Vercel.",
+          "dependencies": [
+            4
+          ],
+          "details": "Write deployment scripts or use platform-specific integrations in the CI workflow to deploy backend Docker images to Render and frontend builds to Vercel automatically.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Implement Database Migration Step",
+          "description": "Add a migration step in the CI/CD pipeline to handle database schema changes safely before or during deployment.",
+          "dependencies": [
+            5
+          ],
+          "details": "Integrate database migration commands or tools into the deployment process to ensure the database schema is updated in sync with application deployments.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 22,
+      "title": "Implement Error Tracking with Sentry",
+      "description": "Integrate Sentry for error tracking in both frontend and backend.",
+      "details": "1. Set up Sentry project\n2. Install Sentry SDK for Python and JavaScript\n3. Configure Sentry in backend (FastAPI)\n4. Set up Sentry in frontend (Next.js)\n5. Implement custom error boundaries in React\n6. Configure environment-based Sentry settings",
+      "testStrategy": "1. Test error capturing in backend\n2. Verify frontend error tracking\n3. Ensure environment-specific configuration works\n4. Test custom error boundaries",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        15
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Sentry Project Setup",
+          "description": "Create a new project in your Sentry account, select the appropriate platform (Python, JavaScript, etc.), and note down the DSN and project details.",
+          "dependencies": [],
+          "details": "Log in to Sentry, click 'Create a Project', choose your backend/frontend type, and record the DSN, organization slug, and project name for later configuration.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "SDK Installation (Python/JS)",
+          "description": "Install the Sentry SDK in both backend (Python) and frontend (JavaScript/React) environments.",
+          "dependencies": [
+            1
+          ],
+          "details": "For Python: pip install sentry-sdk. For JavaScript: npm install @sentry/browser (or @sentry/react for React apps).",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Backend Configuration",
+          "description": "Configure the Sentry SDK in your backend (Python) application using the DSN and environment variables.",
+          "dependencies": [
+            2
+          ],
+          "details": "Initialize Sentry in your backend code (e.g., sentry_sdk.init(dsn=..., environment=...)) and ensure environment-specific settings are applied.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Frontend Configuration",
+          "description": "Configure the Sentry SDK in your frontend (JavaScript/React) application using the DSN and environment variables.",
+          "dependencies": [
+            2
+          ],
+          "details": "Initialize Sentry in your main JS/React entry point (e.g., Sentry.init({ dsn: ..., environment: ... })) and ensure environment-specific settings are applied.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "React Error Boundaries Integration",
+          "description": "Integrate Sentry's React ErrorBoundary component to capture and report React component errors.",
+          "dependencies": [
+            4
+          ],
+          "details": "Wrap your React app or specific components with Sentry's ErrorBoundary to automatically capture and report uncaught errors in the UI.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Environment-Based Settings",
+          "description": "Set up environment-based configuration for Sentry in both backend and frontend, ensuring sensitive data is managed securely.",
+          "dependencies": [
+            3,
+            4
+          ],
+          "details": "Use environment variables (e.g., SENTRY_DSN, SENTRY_ENVIRONMENT) and .env files to manage Sentry settings for development, staging, and production environments.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 23,
+      "title": "Implement Basic Monitoring and Health Checks",
+      "description": "Set up basic monitoring and health check endpoints.",
+      "details": "1. Implement /health endpoint in FastAPI\n2. Create health checks for Redis and PostgreSQL connections\n3. Implement /status endpoint for system metrics\n4. Set up basic logging for critical operations\n5. Configure health check in Docker Compose",
+      "testStrategy": "1. Test /health endpoint\n2. Verify Redis and PostgreSQL health checks\n3. Ensure /status endpoint returns correct metrics\n4. Test logging functionality",
+      "priority": "medium",
+      "dependencies": [
+        2,
+        5
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Implement FastAPI /health Endpoint",
+          "description": "Create a /health endpoint in the FastAPI application to provide a basic health check route.",
+          "dependencies": [],
+          "details": "Set up a FastAPI route at /health that returns a simple status indicating the service is running. Use fastapi-health or similar package for extensibility.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Add Redis Health Check",
+          "description": "Integrate a Redis connectivity check into the /health endpoint to verify Redis availability.",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement a callable or probe that attempts to connect to Redis and returns its status. Use fastapi-healthchecks or a custom function.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Add PostgreSQL Health Check",
+          "description": "Integrate a PostgreSQL connectivity check into the /health endpoint to verify database availability.",
+          "dependencies": [
+            1
+          ],
+          "details": "Implement a callable or probe that attempts a simple query (e.g., SELECT 1) against PostgreSQL and returns its status. Use fastapi-healthchecks or a custom function.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Implement /status Endpoint",
+          "description": "Create a /status endpoint in FastAPI to provide extended application status and metrics.",
+          "dependencies": [
+            1,
+            2,
+            3
+          ],
+          "details": "Design a /status route that aggregates and returns detailed health and status information, possibly including uptime, version, and results from Redis/PostgreSQL checks.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Configure Docker Compose Health Checks",
+          "description": "Add healthcheck configurations to Docker Compose for FastAPI, Redis, and PostgreSQL services.",
+          "dependencies": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "details": "Update docker-compose.yml to include healthcheck sections for each service, using curl or similar tools to query /health and native checks for Redis/PostgreSQL.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 24,
+      "title": "Optimize Database Queries and Implement Caching",
+      "description": "Optimize database queries and implement caching for improved performance.",
+      "details": "1. Analyze and optimize existing database queries\n2. Implement database indexing for frequently accessed fields\n3. Set up Redis caching for frequently accessed data\n4. Implement cache invalidation strategy\n5. Add performance monitoring",
+      "testStrategy": "1. Benchmark query performance before and after optimization\n2. Verify cache hit rates\n3. Test cache invalidation\n4. Ensure performance improvements under load",
+      "priority": "low",
+      "dependencies": [
+        3,
+        11
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Query Analysis",
+          "description": "Analyze current query patterns, identify bottlenecks, and determine optimization opportunities using tools like EXPLAIN ANALYZE and by reviewing query structure and data access patterns.",
+          "dependencies": [],
+          "details": "Review SQL queries for inefficiencies, such as unnecessary columns, suboptimal joins, or lack of filtering. Use query analysis tools to measure execution time and resource usage. Document findings and suggest improvements.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Index Implementation",
+          "description": "Design and implement appropriate indexes based on the query analysis to improve data retrieval performance.",
+          "dependencies": [
+            1
+          ],
+          "details": "Identify columns frequently used in WHERE clauses, JOINs, and ORDER BY statements. Create indexes on these columns and validate their effectiveness by re-running query analysis tools.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Redis Caching Integration",
+          "description": "Integrate Redis caching for frequently accessed data to reduce database load and improve response times.",
+          "dependencies": [
+            2
+          ],
+          "details": "Determine which queries or data sets are suitable for caching based on access patterns. Implement Redis caching for these, ensuring proper serialization and deserialization of data.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Cache Invalidation Strategy",
+          "description": "Develop and implement a cache invalidation strategy to ensure data consistency between Redis cache and the primary database.",
+          "dependencies": [
+            3
+          ],
+          "details": "Choose appropriate invalidation mechanisms such as time-to-live (TTL), event-based invalidation, or manual cache clearing. Balance data freshness with performance and document the chosen approach.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Performance Monitoring",
+          "description": "Set up monitoring for query performance, index usage, and cache efficiency to ensure ongoing optimization and quickly identify regressions.",
+          "dependencies": [
+            4
+          ],
+          "details": "Implement tools and dashboards to track query execution times, cache hit/miss rates, and index effectiveness. Set up alerts for abnormal patterns and regularly review metrics for further optimization.",
+          "status": "pending"
+        }
+      ]
+    },
+    {
+      "id": 25,
+      "title": "Implement Security Best Practices",
+      "description": "Enhance system security by implementing additional security measures.",
+      "details": "1. Implement HTTPS enforcement\n2. Set up CORS policies\n3. Implement Content Security Policy (CSP)\n4. Add rate limiting to sensitive endpoints\n5. Implement secure headers (X-XSS-Protection, X-Frame-Options, etc.)\n6. Conduct security audit and penetration testing",
+      "testStrategy": "1. Verify HTTPS enforcement\n2. Test CORS policies\n3. Ensure CSP is working correctly\n4. Test rate limiting functionality\n5. Verify secure headers are present\n6. Conduct and review results of security audit",
+      "priority": "high",
+      "dependencies": [
+        2,
+        4,
+        15
+      ],
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": 1,
+          "title": "Enforce HTTPS and HSTS",
+          "description": "Implement HTTPS across all web services, ensure automatic redirection from HTTP to HTTPS, and configure HTTP Strict Transport Security (HSTS) to enforce secure connections.",
+          "dependencies": [],
+          "details": "Set up HTTPS certificates, configure web servers to redirect HTTP to HTTPS, and add HSTS headers. Consider HSTS preloading for additional security. Use online tools to verify SSL/TLS configuration and compliance.",
+          "status": "pending"
+        },
+        {
+          "id": 2,
+          "title": "Configure CORS (Cross-Origin Resource Sharing)",
+          "description": "Set up CORS policies to control which domains can access resources, preventing unauthorized cross-origin requests.",
+          "dependencies": [
+            1
+          ],
+          "details": "Define allowed origins, methods, and headers in server configuration. Test CORS settings to ensure legitimate requests are permitted and unauthorized requests are blocked.",
+          "status": "pending"
+        },
+        {
+          "id": 3,
+          "title": "Implement Content Security Policy (CSP)",
+          "description": "Deploy a Content Security Policy to restrict sources of executable scripts, styles, and other resources, mitigating XSS and data injection attacks.",
+          "dependencies": [
+            2
+          ],
+          "details": "Draft and apply a CSP header tailored to the application's needs. Monitor violation reports and adjust the policy to balance security and functionality.",
+          "status": "pending"
+        },
+        {
+          "id": 4,
+          "title": "Set Up Rate Limiting",
+          "description": "Implement rate limiting to prevent abuse, brute-force attacks, and denial-of-service attempts by restricting the number of requests per user or IP.",
+          "dependencies": [
+            3
+          ],
+          "details": "Configure rate limiting rules in the application or at the proxy level. Monitor logs for excessive requests and tune thresholds as needed.",
+          "status": "pending"
+        },
+        {
+          "id": 5,
+          "title": "Apply Secure HTTP Headers",
+          "description": "Add and configure secure HTTP headers such as X-Frame-Options, X-Content-Type-Options, and Referrer-Policy to enhance browser-side security.",
+          "dependencies": [
+            4
+          ],
+          "details": "Review recommended secure headers, implement them in server configuration, and verify their presence and correctness using security scanning tools.",
+          "status": "pending"
+        },
+        {
+          "id": 6,
+          "title": "Conduct Security Audit and Testing",
+          "description": "Perform comprehensive security audits and penetration testing to validate the effectiveness of implemented controls and identify vulnerabilities.",
+          "dependencies": [
+            5
+          ],
+          "details": "Use automated scanners and manual testing to assess security posture. Address any findings and retest to ensure robust protection.",
+          "status": "pending"
+        }
+      ]
+    }
+  ]
+}

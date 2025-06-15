@@ -1,0 +1,213 @@
+{
+  "meta": {
+    "generatedAt": "2025-06-14T23:25:37.275Z",
+    "tasksAnalyzed": 21,
+    "totalTasks": 25,
+    "analysisCount": 25,
+    "thresholdScore": 5,
+    "projectName": "Taskmaster",
+    "usedResearch": true
+  },
+  "complexityAnalysis": [
+    {
+      "taskId": 1,
+      "taskTitle": "Setup Project Repository and Development Environment",
+      "complexityScore": 8,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Break down each environment setup step (Git repo, Poetry, Dockerfile, docker-compose, env vars, health checks, volume mounts) into individual subtasks, and include verification steps for each.",
+      "reasoning": "This task involves multiple technologies (Git, Poetry, Docker, Docker Compose, environment variables, health checks, and volume mounts), each with its own configuration and verification. The integration of these components increases complexity and risk of misconfiguration."
+    },
+    {
+      "taskId": 2,
+      "taskTitle": "Implement FastAPI Backend Structure",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand each setup item (dependency installation, app initialization, routing, CORS, versioning, rate limiting, env configs) into a separate subtask, and add subtasks for basic test coverage.",
+      "reasoning": "Setting up a robust backend structure with routing, middleware, versioning, and rate limiting requires careful configuration and testing, but is relatively standard for modern web APIs."
+    },
+    {
+      "taskId": 3,
+      "taskTitle": "Setup Supabase Integration",
+      "complexityScore": 7,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Create subtasks for Supabase client installation, project setup, database connection, storage configuration, CRUD implementation, and security policy setup.",
+      "reasoning": "Integrating a third-party backend-as-a-service like Supabase involves several moving parts, including authentication, storage, and security, each requiring dedicated attention."
+    },
+    {
+      "taskId": 15,
+      "taskTitle": "Setup Next.js Frontend Project",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Break down into project initialization, structure setup, TypeScript config, API client setup, routing, and env variable handling.",
+      "reasoning": "Frontend project setup is routine but involves several configuration steps that must be coordinated for a smooth developer experience."
+    },
+    {
+      "taskId": 4,
+      "taskTitle": "Implement User Authentication",
+      "complexityScore": 8,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Break down each authentication flow (sign-up, login, logout, token refresh) into separate subtasks, and add subtasks for multi-factor authentication, password reset, and audit logging.",
+      "reasoning": "This task involves integrating a third-party authentication provider, handling JWTs, session management, middleware, and comprehensive testing. Each step introduces branching logic and security considerations, increasing cyclomatic and structural complexity. Expanding to cover edge cases and security best practices is recommended."
+    },
+    {
+      "taskId": 5,
+      "taskTitle": "Setup Redis and Celery Integration",
+      "complexityScore": 7,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Expand by adding subtasks for monitoring Celery workers, handling task retries/failures, and documenting deployment/rollback procedures.",
+      "reasoning": "Integrating Redis and Celery involves multi-service orchestration, asynchronous processing, and Docker configuration. The complexity is moderate-high due to distributed system concerns and error handling, warranting further breakdown for reliability and maintainability."
+    },
+    {
+      "taskId": 6,
+      "taskTitle": "Implement Gmail OAuth2 Authentication",
+      "complexityScore": 8,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Add subtasks for consent screen customization, handling OAuth scopes, user consent revocation, and detailed audit logging of authentication events.",
+      "reasoning": "OAuth2 flows are inherently complex due to security, token management, and integration with external APIs. Secure token storage and refresh logic add to the intricacy, and additional subtasks are needed for robust, secure, and auditable implementation."
+    },
+    {
+      "taskId": 7,
+      "taskTitle": "Implement Email Polling Service",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand by adding subtasks for scheduling/retrying failed polls, metrics collection, and alerting on repeated failures or anomalies.",
+      "reasoning": "This task spans asynchronous job orchestration, external API integration, file handling, and error management. The workflow's reliability and observability can be improved by further decomposing error handling and monitoring."
+    },
+    {
+      "taskId": 8,
+      "taskTitle": "Setup Tesseract OCR Integration",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Add subtasks for language pack management, OCR accuracy benchmarking, and automated regression testing for new invoice formats.",
+      "reasoning": "OCR integration involves system-level dependencies, image preprocessing, data extraction, and error handling. The complexity is elevated by the need for accuracy and robustness across diverse document types."
+    },
+    {
+      "taskId": 9,
+      "taskTitle": "Implement Invoice Data Model",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Expand by adding subtasks for data migration from legacy systems, model versioning, and automated schema documentation.",
+      "reasoning": "While data modeling is foundational, it is less complex than integration tasks but still requires careful planning for migrations, indexing, and validation to ensure data integrity and performance."
+    },
+    {
+      "taskId": 10,
+      "taskTitle": "Implement OCR Data Persistence",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Add subtasks for transactional integrity, rollback on failure, and audit trail implementation for persisted OCR data.",
+      "reasoning": "Persisting extracted data involves validation, mapping, duplicate detection, and error handling. Complexity is moderate, with opportunities to further decompose for reliability and traceability."
+    },
+    {
+      "taskId": 11,
+      "taskTitle": "Implement Invoice Management API Endpoints",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand by adding subtasks for API documentation (OpenAPI/Swagger), role-based access control, and rate limiting for endpoints.",
+      "reasoning": "API development with validation, error handling, and CRUD operations is moderately complex, especially when considering security, scalability, and maintainability."
+    },
+    {
+      "taskId": 12,
+      "taskTitle": "Implement CSV Export Functionality",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Add subtasks for CSV format validation, internationalization (locale-specific formats), and automated export scheduling.",
+      "reasoning": "CSV export is straightforward but can become complex with large datasets, streaming, and error handling. Additional subtasks can address edge cases and usability."
+    },
+    {
+      "taskId": 13,
+      "taskTitle": "Implement QuickBooks API Integration",
+      "complexityScore": 8,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand by adding subtasks for sandbox vs. production environment handling, webhook/event handling for sync status, and detailed logging/auditing.",
+      "reasoning": "Integrating with a financial API involves OAuth, data mapping, error handling, and duplicate prevention. The business-critical nature and external dependencies increase complexity."
+    },
+    {
+      "taskId": 14,
+      "taskTitle": "Implement Integration Status Endpoint",
+      "complexityScore": 4,
+      "recommendedSubtasks": 4,
+      "expansionPrompt": "Expand by adding subtasks for periodic status polling, UI integration for status display, and alerting on integration failures.",
+      "reasoning": "This is a relatively simple API endpoint, but can be expanded to improve user experience and system observability."
+    },
+    {
+      "taskId": 16,
+      "taskTitle": "Implement User Authentication UI",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Add subtasks for accessibility testing, responsive design, and localization/internationalization of authentication UI.",
+      "reasoning": "Authentication UI involves multiple flows, state management, and security considerations. Complexity is moderate-high, especially with token refresh and protected routes."
+    },
+    {
+      "taskId": 17,
+      "taskTitle": "Implement Invoice Dashboard UI",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand by adding subtasks for dashboard analytics widgets, user customization options, and accessibility compliance.",
+      "reasoning": "A dashboard UI with list, detail, search, and edit/delete features is moderately complex, especially with real-time updates and user interaction patterns."
+    },
+    {
+      "taskId": 18,
+      "taskTitle": "Implement Gmail Connection UI",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Add subtasks for error state UI, OAuth consent screen customization, and user guidance/help for connection issues.",
+      "reasoning": "OAuth UI flows require careful handling of redirects, state, and error feedback. Complexity is moderate, with room for expansion in user experience and support."
+    },
+    {
+      "taskId": 19,
+      "taskTitle": "Implement QuickBooks Integration UI",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand by adding subtasks for export scheduling, advanced status filtering, and user notifications for export results.",
+      "reasoning": "This UI involves OAuth, export actions, status/history, and error handling. Complexity is moderate-high due to integration and user feedback requirements."
+    },
+    {
+      "taskId": 20,
+      "taskTitle": "Implement CSV Export UI",
+      "complexityScore": 5,
+      "recommendedSubtasks": 5,
+      "expansionPrompt": "Add subtasks for export progress indicators, export history filtering, and accessibility improvements.",
+      "reasoning": "The UI for CSV export is relatively simple but can be expanded for better user experience and accessibility."
+    },
+    {
+      "taskId": 21,
+      "taskTitle": "Setup CI/CD Pipeline with GitHub Actions",
+      "complexityScore": 8,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Expand by adding subtasks for secret management, rollback strategies, and pipeline monitoring/alerting.",
+      "reasoning": "CI/CD setup spans multiple environments, automated testing, Docker, deployments, and migrations. High complexity due to orchestration and reliability requirements."
+    },
+    {
+      "taskId": 22,
+      "taskTitle": "Implement Error Tracking with Sentry",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Add subtasks for alert configuration, privacy filtering of error data, and Sentry dashboard training/documentation.",
+      "reasoning": "Sentry integration is moderately complex, involving SDK setup, environment configuration, and error boundary implementation. Expansion can improve monitoring and compliance."
+    },
+    {
+      "taskId": 23,
+      "taskTitle": "Implement Basic Monitoring and Health Checks",
+      "complexityScore": 6,
+      "recommendedSubtasks": 6,
+      "expansionPrompt": "Add subtasks for alerting on health check failures, metrics dashboard integration, and periodic health check automation.",
+      "reasoning": "Monitoring and health checks are essential for reliability. Complexity is moderate, with opportunities to expand for proactive alerting and observability."
+    },
+    {
+      "taskId": 24,
+      "taskTitle": "Optimize Database Queries and Implement Caching",
+      "complexityScore": 7,
+      "recommendedSubtasks": 7,
+      "expansionPrompt": "Expand by adding subtasks for cache warm-up strategies, query performance regression testing, and documentation of optimization decisions.",
+      "reasoning": "Database optimization and caching require analysis, implementation, and monitoring. Complexity is moderate-high due to performance and consistency concerns."
+    },
+    {
+      "taskId": 25,
+      "taskTitle": "Implement Security Best Practices",
+      "complexityScore": 8,
+      "recommendedSubtasks": 8,
+      "expansionPrompt": "Add subtasks for automated security scanning, dependency vulnerability management, and security incident response planning.",
+      "reasoning": "Implementing comprehensive security controls is highly complex, involving multiple layers (transport, application, headers, rate limiting, audits). Expansion is needed for ongoing security assurance."
+    }
+  ]
+}

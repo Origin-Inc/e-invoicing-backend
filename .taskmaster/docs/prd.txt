@@ -1,0 +1,189 @@
+# Invoice AI - Product Requirements Document
+
+## Project Overview
+Build an MVP for automated invoice collection, extraction, and export system that validates the core value proposition: automated invoice processing from email attachments with OCR extraction and accounting system integration.
+
+## Technology Stack Requirements
+
+### Backend & Runtime
+- Python 3.11 (NOT Python 3.13 - project must use 3.11 specifically)
+- FastAPI for async-first, high-performance API
+- Poetry for dependency management
+- Docker containerization (HIGH PRIORITY - implement early)
+
+### Task Queue & Background Processing
+- Redis for message broker
+- Celery for background job processing (OCR, email polling, reconciliation)
+
+### Database & Storage
+- PostgreSQL via Supabase (managed Postgres with row-level security)
+- Supabase Storage for file storage (S3-compatible)
+
+### OCR & AI Processing
+- Start with Tesseract OCR (open source)
+- Plan migration path to Google Cloud Document AI Invoice Parser
+- Extract: invoice date, vendor name, total amount, line items
+
+### Email Integration
+- Gmail API with OAuth2 authentication
+- Webhook-driven inbox monitoring
+- Microsoft Graph API support (future)
+
+### Accounting Integration
+- QuickBooks API integration
+- Xero API support (future)
+- CSV export functionality
+
+### Frontend
+- Next.js with TypeScript
+- Server-side rendering (SSR)
+- Vercel deployment
+
+### Infrastructure & DevOps
+- Docker + Docker Compose for local development
+- GitHub Actions for CI/CD
+- Frontend: Vercel hosting
+- Backend & Workers: Render hosting
+- Sentry for error tracking
+- Basic monitoring and health checks
+
+## Core Features & User Stories
+
+### 1. Email Integration
+- As a user, I want to connect my Gmail account via OAuth2 so that the system can automatically scan for invoice attachments
+- As a user, I want the system to poll my email every 5-15 minutes for new invoices
+- As a user, I want secure token storage and refresh handling
+
+### 2. OCR & Data Extraction
+- As a user, I want invoice attachments automatically stored securely
+- As a user, I want OCR processing to extract key invoice data (date, vendor, total, line items)
+- As a user, I want the system to handle various invoice formats and layouts
+- As a user, I want extraction accuracy to improve over time
+
+### 3. Invoice Management
+- As a user, I want to see a dashboard listing all extracted invoices
+- As a user, I want to search and filter invoices by vendor, date, amount
+- As a user, I want to view detailed invoice information and line items
+- As a user, I want to manually correct OCR extraction errors
+- As a user, I want to see processing status for each invoice
+
+### 4. Data Export & Integration
+- As a user, I want to export invoice data to CSV format
+- As a user, I want to push invoices directly to QuickBooks
+- As a user, I want to avoid duplicate entries in my accounting system
+- As a user, I want to track which invoices have been exported
+
+## Data Models
+
+### Users Table
+- id (UUID, primary key)
+- email (TEXT, unique)
+- created_at (TIMESTAMP)
+- gmail_tokens (encrypted OAuth2 tokens)
+
+### Invoices Table
+- id (UUID, primary key)
+- user_id (UUID, foreign key)
+- source (TEXT - email source)
+- invoice_date (DATE)
+- vendor (TEXT)
+- total_amount (NUMERIC)
+- status (TEXT - pending, processed, exported)
+- file_path (TEXT - storage location)
+- created_at (TIMESTAMP)
+- updated_at (TIMESTAMP)
+
+### Line Items Table
+- id (UUID, primary key)
+- invoice_id (UUID, foreign key)
+- description (TEXT)
+- quantity (INTEGER)
+- unit_price (NUMERIC)
+- total_price (NUMERIC)
+
+## API Endpoints
+
+### Authentication & Setup
+- POST /auth/gmail - Start Gmail OAuth2 flow
+- GET /auth/gmail/callback - Handle OAuth2 callback
+- POST /auth/logout - Logout user
+
+### Invoice Management
+- GET /invoices - List/search invoices with pagination
+- GET /invoices/{id} - Get single invoice details
+- PUT /invoices/{id} - Update invoice data (manual corrections)
+- DELETE /invoices/{id} - Delete invoice
+
+### Export & Integration
+- POST /export/csv - Generate CSV export
+- POST /integrations/quickbooks/connect - Connect QuickBooks
+- POST /integrations/quickbooks/export - Export to QuickBooks
+- GET /integrations/status - Get integration status
+
+### System
+- GET /health - Health check endpoint
+- GET /status - System status and metrics
+
+## System Architecture
+
+### Data Flow
+1. User connects Gmail via OAuth2 → FastAPI stores encrypted tokens
+2. Celery email-poller task fetches new emails → downloads attachments to Supabase Storage → enqueues OCR job
+3. OCR Worker downloads file → Tesseract extracts data → persists to PostgreSQL
+4. Frontend fetches via FastAPI and displays in dashboard
+5. Export endpoints trigger CSV generation or QuickBooks API calls
+
+### Background Tasks
+- Email polling (every 5-15 minutes)
+- OCR processing (triggered by new attachments)
+- Data validation and cleanup
+- Export job processing
+- Token refresh handling
+
+## Docker Requirements
+- Multi-stage Dockerfile for Python 3.11
+- Separate containers for API and Worker
+- Docker Compose for local development
+- Redis container for task queue
+- Environment variable configuration
+- Health checks for all services
+- Volume mounts for development
+
+## Deployment Requirements
+- GitHub Actions CI/CD pipeline
+- Automated testing before deployment
+- Docker image building and pushing
+- Environment-specific configurations
+- Database migrations
+- Monitoring and alerting setup
+
+## Security Requirements
+- OAuth2 token encryption at rest
+- Secure file storage with access controls
+- API rate limiting
+- Input validation and sanitization
+- HTTPS enforcement
+- Environment variable security
+
+## Performance Requirements
+- Email polling within 15 minutes
+- OCR processing within 2 minutes per invoice
+- API response times under 500ms
+- Support for concurrent users
+- Efficient database queries with indexing
+
+## Success Metrics
+- Successful email connection rate > 95%
+- OCR accuracy rate > 85% for key fields
+- Processing time < 2 minutes per invoice
+- User retention after first week > 60%
+- Export success rate > 98%
+
+## Future Enhancements (Not MVP)
+- Microsoft Graph API integration
+- Xero accounting integration
+- Google Cloud Document AI migration
+- Advanced OCR training
+- Mobile application
+- Batch processing capabilities
+- Advanced reporting and analytics 

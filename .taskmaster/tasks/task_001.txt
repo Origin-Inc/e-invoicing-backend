@@ -1,0 +1,89 @@
+# Task ID: 1
+# Title: Setup Project Repository and Development Environment
+# Status: done
+# Dependencies: None
+# Priority: high
+# Description: Initialize the project repository with Poetry for dependency management and set up the development environment with Docker and Docker Compose.
+# Details:
+1. Create a new Git repository
+2. Initialize Poetry project with `poetry init`
+3. Set Python version to 3.11 in pyproject.toml
+4. Create a multi-stage Dockerfile for Python 3.11
+5. Create a docker-compose.yml file with services for API, Worker, Redis, and PostgreSQL
+6. Set up environment variable configuration
+7. Implement health checks for all services
+8. Configure volume mounts for development
+
+# Test Strategy:
+1. Verify Poetry can install dependencies
+2. Ensure Docker containers can be built and run
+3. Check if services can communicate with each other
+4. Validate environment variables are properly loaded
+5. Test health check endpoints
+
+# Subtasks:
+## 1. Initialize Git Repository [done]
+### Dependencies: None
+### Description: Set up a new Git repository for the project to enable version control.
+### Details:
+Run 'git init' in the project directory and create an initial commit with a .gitignore file tailored for Python, Docker, and Poetry artifacts.
+<info added on 2025-06-13T19:04:19.594Z>
+Successfully created private repository at Origin-Inc/Invoice_AI
+
+Repository Setup Completed:
+- Repository transferred to Origin-Inc organization
+- Added comprehensive .gitignore for Python/Docker projects
+- Created pyproject.toml with Python 3.11 requirement
+- Set up multi-stage Dockerfile using Python 3.11
+- Configured docker-compose.yml with all services (API, worker, beat, Redis, PostgreSQL, Flower)
+- Added .env.example with all required environment variables
+- Created comprehensive README with setup instructions
+- Added database initialization script
+- Initialized Python package structure (src/invoice_ai)
+
+Repository URL: https://github.com/Origin-Inc/Invoice_AI
+All core infrastructure files are in place and ready for development.
+</info added on 2025-06-13T19:04:19.594Z>
+
+## 2. Configure Python 3.11 Environment [done]
+### Dependencies: 1.1
+### Description: Ensure the project uses Python 3.11 (not 3.13) for all development and deployment steps.
+### Details:
+Set up Python 3.11 locally using pyenv or system package manager. Update project documentation and configuration files to specify Python 3.11 as the required version.
+
+## 3. Set Up Poetry for Dependency Management [done]
+### Dependencies: 1.2
+### Description: Install and configure Poetry to manage Python dependencies and project metadata.
+### Details:
+Install Poetry, run 'poetry init' to create pyproject.toml, and configure Poetry to use the system Python 3.11 interpreter. Add required dependencies.
+
+## 4. Create Multi-Stage Dockerfile Using Python 3.11 [done]
+### Dependencies: 1.3
+### Description: Write a multi-stage Dockerfile that uses Python 3.11 for both build and runtime stages, integrating Poetry for dependency installation.
+### Details:
+Base the build stage on 'python:3.11-slim', install Poetry, copy project files, and install dependencies. Use a clean 'python:3.11-alpine' or similar for the runtime stage, copying only necessary artifacts from the builder stage.[1][5]
+
+## 5. Configure Docker Compose with Required Services [done]
+### Dependencies: 1.4
+### Description: Set up docker-compose.yml to orchestrate the application container and any additional services (e.g., databases).
+### Details:
+Define services, specify build context, set up environment variables, volume mounts, and health checks as needed. Ensure the Python service uses the multi-stage Dockerfile and Python 3.11.
+
+## 6. Set Up Environment Variables Management [done]
+### Dependencies: 1.5
+### Description: Configure environment variable handling for both local development and Dockerized environments.
+### Details:
+Define required environment variables in .env files and ensure they are referenced in Docker Compose and the application code. Document all variables.
+
+## 7. Implement Health Checks and Volume Mounts [done]
+### Dependencies: None
+### Description: Add health check configurations and set up volume mounts for persistent data and live code reloading.
+### Details:
+Configure healthcheck directives in docker-compose.yml for all relevant services. Set up volume mounts for source code and data directories as needed.
+
+## 8. Verify and Test Each Setup Component [done]
+### Dependencies: None
+### Description: Individually verify the correct setup and operation of Git, Python 3.11, Poetry, Dockerfile, Docker Compose, environment variables, health checks, and volume mounts.
+### Details:
+For each component: run status checks (e.g., 'git status', 'python --version', 'poetry check', 'docker build', 'docker-compose up'), confirm expected behavior, and document verification results.
+

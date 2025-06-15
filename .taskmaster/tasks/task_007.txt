@@ -1,0 +1,58 @@
+# Task ID: 7
+# Title: Implement Email Polling Service
+# Status: pending
+# Dependencies: 5, 6
+# Priority: medium
+# Description: Create a Celery task for polling emails every 5-15 minutes.
+# Details:
+1. Implement Celery task for email polling
+2. Use Gmail API to fetch new emails
+3. Filter emails for invoice attachments
+4. Download attachments to Supabase Storage
+5. Enqueue OCR job for each attachment
+6. Implement error handling and retries
+
+# Test Strategy:
+1. Test email fetching with mock Gmail API
+2. Verify correct filtering of invoice attachments
+3. Ensure attachments are properly stored
+4. Test OCR job enqueuing
+5. Verify error handling and retry mechanism
+
+# Subtasks:
+## 1. Celery Task Creation [pending]
+### Dependencies: None
+### Description: Design and implement Celery tasks to handle the workflow, ensuring tasks are short, idempotent, and follow best practices for background processing.
+### Details:
+Define modular Celery tasks for each processing step, avoiding long-running or monolithic tasks. Ensure tasks are atomic and can be retried safely if needed.
+
+## 2. Gmail API Integration [pending]
+### Dependencies: 7.1
+### Description: Integrate with the Gmail API to fetch emails and their attachments programmatically.
+### Details:
+Set up authentication and implement logic to connect to Gmail, retrieve messages, and extract attachments for further processing.
+
+## 3. Attachment Filtering [pending]
+### Dependencies: 7.2
+### Description: Filter email attachments based on predefined criteria such as file type, size, or content.
+### Details:
+Implement logic to select only relevant attachments (e.g., PDFs, images) and discard or skip others before uploading or processing.
+
+## 4. Storage Upload [pending]
+### Dependencies: 7.3
+### Description: Upload filtered attachments to a designated storage service (e.g., AWS S3, Google Cloud Storage).
+### Details:
+Implement secure and efficient file upload logic, ensuring files are stored with appropriate metadata and access controls.
+
+## 5. OCR Job Enqueuing [pending]
+### Dependencies: 7.4
+### Description: Enqueue OCR processing jobs for each uploaded attachment using Celery.
+### Details:
+Create Celery tasks to trigger OCR processing on stored files, passing necessary file references and parameters.
+
+## 6. Error Handling [pending]
+### Dependencies: 7.1, 7.2, 7.3, 7.4, 7.5
+### Description: Implement robust error handling and logging throughout the workflow to manage failures and retries.
+### Details:
+Add try/except blocks, logging, and retry mechanisms to each step, ensuring errors are captured, reported, and do not halt the entire pipeline.
+

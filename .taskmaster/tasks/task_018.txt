@@ -1,0 +1,50 @@
+# Task ID: 18
+# Title: Implement Gmail Connection UI
+# Status: pending
+# Dependencies: 16
+# Priority: medium
+# Description: Create user interface for connecting Gmail account.
+# Details:
+1. Create Gmail connection page
+2. Implement OAuth flow initiation
+3. Handle OAuth callback
+4. Display connection status
+5. Implement disconnect functionality
+
+# Test Strategy:
+1. Test OAuth flow initiation
+2. Verify callback handling
+3. Ensure connection status is correctly displayed
+4. Test disconnect functionality
+
+# Subtasks:
+## 1. Design Connection Page UI [pending]
+### Dependencies: None
+### Description: Create a user interface page where users can initiate OAuth connection, view connection status, and disconnect if needed.
+### Details:
+The connection page should include a button to start the OAuth flow, display current connection status (connected/disconnected), and provide a disconnect option.
+
+## 2. Implement OAuth Initiation Logic [pending]
+### Dependencies: 18.1
+### Description: Develop frontend logic to initiate the OAuth 2.0 authorization flow by redirecting users to the OAuth provider's authorization endpoint.
+### Details:
+Generate a CSRF token (state parameter) for security, store it locally, and redirect the user to the OAuth provider with required query parameters such as client_id, redirect_uri, scope, response_type=code, and state as per OAuth 2.0 standards.
+
+## 3. Handle OAuth Callback [pending]
+### Dependencies: 18.2
+### Description: Implement backend or frontend logic to handle the OAuth provider's callback with authorization code or error response.
+### Details:
+Parse the query parameters from the callback URL to extract the authorization code or error. Validate the state parameter against the stored CSRF token to prevent CSRF attacks. Exchange the authorization code for access and refresh tokens as needed.
+
+## 4. Display OAuth Connection Status [pending]
+### Dependencies: 18.3
+### Description: Show the current OAuth connection status on the connection page to inform the user if they are connected or disconnected.
+### Details:
+Use stored tokens or session information to determine if the user is connected. Update the UI dynamically to reflect the connection status and provide feedback on successful connection or errors.
+
+## 5. Implement Disconnect Functionality [pending]
+### Dependencies: 18.4
+### Description: Allow users to disconnect the OAuth connection, revoking tokens and clearing stored credentials.
+### Details:
+Provide a disconnect button that clears stored tokens and session data related to the OAuth connection. Optionally, call the OAuth provider's token revocation endpoint to invalidate tokens.
+

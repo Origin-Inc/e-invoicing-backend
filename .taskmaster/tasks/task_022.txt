@@ -1,0 +1,57 @@
+# Task ID: 22
+# Title: Implement Error Tracking with Sentry
+# Status: pending
+# Dependencies: 2, 15
+# Priority: medium
+# Description: Integrate Sentry for error tracking in both frontend and backend.
+# Details:
+1. Set up Sentry project
+2. Install Sentry SDK for Python and JavaScript
+3. Configure Sentry in backend (FastAPI)
+4. Set up Sentry in frontend (Next.js)
+5. Implement custom error boundaries in React
+6. Configure environment-based Sentry settings
+
+# Test Strategy:
+1. Test error capturing in backend
+2. Verify frontend error tracking
+3. Ensure environment-specific configuration works
+4. Test custom error boundaries
+
+# Subtasks:
+## 1. Sentry Project Setup [pending]
+### Dependencies: None
+### Description: Create a new project in your Sentry account, select the appropriate platform (Python, JavaScript, etc.), and note down the DSN and project details.
+### Details:
+Log in to Sentry, click 'Create a Project', choose your backend/frontend type, and record the DSN, organization slug, and project name for later configuration.
+
+## 2. SDK Installation (Python/JS) [pending]
+### Dependencies: 22.1
+### Description: Install the Sentry SDK in both backend (Python) and frontend (JavaScript/React) environments.
+### Details:
+For Python: pip install sentry-sdk. For JavaScript: npm install @sentry/browser (or @sentry/react for React apps).
+
+## 3. Backend Configuration [pending]
+### Dependencies: 22.2
+### Description: Configure the Sentry SDK in your backend (Python) application using the DSN and environment variables.
+### Details:
+Initialize Sentry in your backend code (e.g., sentry_sdk.init(dsn=..., environment=...)) and ensure environment-specific settings are applied.
+
+## 4. Frontend Configuration [pending]
+### Dependencies: 22.2
+### Description: Configure the Sentry SDK in your frontend (JavaScript/React) application using the DSN and environment variables.
+### Details:
+Initialize Sentry in your main JS/React entry point (e.g., Sentry.init({ dsn: ..., environment: ... })) and ensure environment-specific settings are applied.
+
+## 5. React Error Boundaries Integration [pending]
+### Dependencies: 22.4
+### Description: Integrate Sentry's React ErrorBoundary component to capture and report React component errors.
+### Details:
+Wrap your React app or specific components with Sentry's ErrorBoundary to automatically capture and report uncaught errors in the UI.
+
+## 6. Environment-Based Settings [pending]
+### Dependencies: 22.3, 22.4
+### Description: Set up environment-based configuration for Sentry in both backend and frontend, ensuring sensitive data is managed securely.
+### Details:
+Use environment variables (e.g., SENTRY_DSN, SENTRY_ENVIRONMENT) and .env files to manage Sentry settings for development, staging, and production environments.
+
