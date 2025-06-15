@@ -1,6 +1,6 @@
 # Task ID: 3
 # Title: Setup Supabase Integration
-# Status: pending
+# Status: in-progress
 # Dependencies: 2
 # Priority: high
 # Description: Integrate Supabase for PostgreSQL database and storage functionality.
@@ -19,23 +19,168 @@
 4. Test row-level security policies
 
 # Subtasks:
-## 1. Install Supabase Client Library [pending]
+## 1. Install Supabase Client Library [done]
 ### Dependencies: None
 ### Description: Install the Supabase Python client library (v2.15.3) in your project using poetry.
 ### Details:
 Run `poetry add supabase` to add the Supabase Python client to your project.
 
-## 2. Set Up Supabase Project [pending]
+## 2. Set Up Supabase Project [done]
 ### Dependencies: 3.1
 ### Description: Initialize a new Supabase project and obtain the necessary API keys.
 ### Details:
 Create a new project in the Supabase dashboard, then retrieve your project URL and anon/public API key for use in your Python application.
+<info added on 2025-06-15T00:45:05.355Z>
+## Supabase Project Setup Progress
 
-## 3. Establish Database Connection [pending]
+### Completed Infrastructure:
+- ✅ Added Supabase environment variables to .env file
+- ✅ Created src/database/ module structure
+- ✅ Implemented supabase_client.py with proper client configuration
+- ✅ Added python-dotenv dependency for environment variable loading
+- ✅ Included service role client setup for admin operations
+- ✅ Added connection testing functionality
+
+### Next Steps Required:
+**USER ACTION NEEDED**: Go to https://app.supabase.com/ and:
+
+1. **Create New Project:**
+   - Sign in to Supabase Dashboard
+   - Click "New Project"
+   - Name: "E-Invoicing" or "Invoice-AI"
+   - Choose organization and region
+   - Set strong database password (save it!)
+
+2. **Get API Credentials:**
+   - Once project is created, go to Settings > API
+   - Copy "Project URL" 
+   - Copy "anon/public" API key
+   - Copy "service_role" key (for admin operations)
+
+3. **Update .env file:**
+   ```
+   SUPABASE_URL=https://your-project-ref.supabase.co
+   SUPABASE_KEY=your-anon-key-here  
+   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+   ```
+
+### Code Implementation Ready:
+- Supabase client properly configured with error handling
+- Environment variable validation
+- Connection testing capability
+- Service role client for admin operations
+- Modular structure for easy importing
+</info added on 2025-06-15T00:45:05.355Z>
+<info added on 2025-06-15T00:47:02.337Z>
+## Switching to Local Supabase Development
+
+**Decision Made**: Setting up local Supabase development instead of cloud for better development experience.
+
+### Benefits of Local Setup:
+- No internet dependency for development
+- Faster development cycles
+- No API rate limits or costs
+- Version control database schema
+- Easy data reset/seeding
+- Integrates with existing Docker workflow
+
+### Next Steps:
+1. Install Supabase CLI
+2. Initialize local Supabase project
+3. Update environment variables for local setup
+4. Integrate with existing Docker compose setup
+
+### Local Setup Instructions:
+
+1. **Install Supabase CLI:**
+   ```bash
+   # Using npm
+   npm install -g supabase
+   
+   # Or using Homebrew (macOS)
+   brew install supabase/tap/supabase
+   ```
+
+2. **Initialize Local Project:**
+   ```bash
+   # Create a supabase directory in your project
+   mkdir -p supabase
+   cd supabase
+   
+   # Initialize local project
+   supabase init
+   ```
+
+3. **Start Local Supabase:**
+   ```bash
+   supabase start
+   ```
+
+4. **Update Environment Variables:**
+   ```
+   # Local development environment variables
+   SUPABASE_URL=http://localhost:54321
+   SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...  # Use the anon key provided after 'supabase start'
+   SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5c... # Use the service_role key provided
+   ```
+
+5. **Docker Integration:**
+   Add to your existing docker-compose.yml:
+   ```yaml
+   services:
+     # Your existing services...
+     
+     supabase:
+       image: supabase/supabase-local
+       ports:
+         - "54321:54321"
+       volumes:
+         - ./supabase:/supabase
+   ```
+
+**Note:** The existing Supabase client configuration should work with both cloud and local setups as long as the environment variables are updated accordingly.
+</info added on 2025-06-15T00:47:02.337Z>
+
+## 3. Establish Database Connection [done]
 ### Dependencies: 3.2
 ### Description: Configure the Supabase Python client to connect to your Supabase database instance.
 ### Details:
 Use your Supabase project URL and anon/public API key to create a client instance in your Python application code. Example: `client = create_client(supabase_url, supabase_key)`.
+<info added on 2025-06-15T01:03:56.206Z>
+## Database Connection Successfully Established
+
+### ✅ Completed Implementation:
+- **Supabase Client Integration**: Integrated get_supabase_client() into FastAPI app startup
+- **Health Check Enhancement**: Added database connectivity check to /v1/health endpoint
+- **Connection Testing**: Successfully verified Supabase connection during app startup
+- **Error Handling**: Proper exception handling for database connection failures
+
+### 🧪 Testing Results:
+```json
+{
+    "status": "ok",
+    "services": {
+        "api": "healthy",
+        "database": {
+            "status": "healthy",
+            "url": "http://127.0.0.1:54321"
+        }
+    }
+}
+```
+
+### 🔧 Technical Details:
+- **Local Supabase URL**: http://127.0.0.1:54321
+- **FastAPI Server**: Running on http://127.0.0.1:8002
+- **Health Endpoint**: /v1/health provides real-time connectivity status
+- **Startup Validation**: App verifies database connection during lifespan startup
+
+### 📋 Code Changes:
+- Updated src/main.py with Supabase client initialization
+- Enhanced src/routers/v1/health.py with database status check
+- Fixed src/database/__init__.py exports to include test_connection
+- Environment variables properly configured for local development
+</info added on 2025-06-15T01:03:56.206Z>
 
 ## 4. Configure Storage [pending]
 ### Dependencies: 3.3

@@ -3,6 +3,7 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from .routers.v1 import health
 from fastapi_limiter import FastAPILimiter
+from .database import get_supabase_client, test_connection
 import redis.asyncio as redis
 import os
 import logging
@@ -20,6 +21,17 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"Failed to initialize rate limiter: {e}")
         # Continue without rate limiting in development
+    
+    # Initialize Supabase connection
+    try:
+        supabase_client = get_supabase_client()
+        if test_connection():
+            logger.info(f"Supabase connected successfully to {supabase_client.supabase_url}")
+        else:
+            logger.warning("Supabase connection test failed")
+    except Exception as e:
+        logger.error(f"Failed to initialize Supabase: {e}")
+        # Continue without Supabase in development if needed
     
     yield
     

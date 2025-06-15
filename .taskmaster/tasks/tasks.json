@@ -177,7 +177,7 @@
       "id": 3,
       "title": "Setup Supabase Integration",
       "description": "Integrate Supabase for PostgreSQL database and storage functionality.",
-      "status": "pending",
+      "status": "in-progress",
       "dependencies": [
         2
       ],
@@ -191,7 +191,7 @@
           "description": "Install the Supabase Python client library (v2.15.3) in your project using poetry.",
           "dependencies": [],
           "details": "Run `poetry add supabase` to add the Supabase Python client to your project.",
-          "status": "pending"
+          "status": "done"
         },
         {
           "id": 2,
@@ -200,8 +200,8 @@
           "dependencies": [
             1
           ],
-          "details": "Create a new project in the Supabase dashboard, then retrieve your project URL and anon/public API key for use in your Python application.",
-          "status": "pending"
+          "details": "Create a new project in the Supabase dashboard, then retrieve your project URL and anon/public API key for use in your Python application.\n<info added on 2025-06-15T00:45:05.355Z>\n## Supabase Project Setup Progress\n\n### Completed Infrastructure:\n- ✅ Added Supabase environment variables to .env file\n- ✅ Created src/database/ module structure\n- ✅ Implemented supabase_client.py with proper client configuration\n- ✅ Added python-dotenv dependency for environment variable loading\n- ✅ Included service role client setup for admin operations\n- ✅ Added connection testing functionality\n\n### Next Steps Required:\n**USER ACTION NEEDED**: Go to https://app.supabase.com/ and:\n\n1. **Create New Project:**\n   - Sign in to Supabase Dashboard\n   - Click \"New Project\"\n   - Name: \"E-Invoicing\" or \"Invoice-AI\"\n   - Choose organization and region\n   - Set strong database password (save it!)\n\n2. **Get API Credentials:**\n   - Once project is created, go to Settings > API\n   - Copy \"Project URL\" \n   - Copy \"anon/public\" API key\n   - Copy \"service_role\" key (for admin operations)\n\n3. **Update .env file:**\n   ```\n   SUPABASE_URL=https://your-project-ref.supabase.co\n   SUPABASE_KEY=your-anon-key-here  \n   SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here\n   ```\n\n### Code Implementation Ready:\n- Supabase client properly configured with error handling\n- Environment variable validation\n- Connection testing capability\n- Service role client for admin operations\n- Modular structure for easy importing\n</info added on 2025-06-15T00:45:05.355Z>\n<info added on 2025-06-15T00:47:02.337Z>\n## Switching to Local Supabase Development\n\n**Decision Made**: Setting up local Supabase development instead of cloud for better development experience.\n\n### Benefits of Local Setup:\n- No internet dependency for development\n- Faster development cycles\n- No API rate limits or costs\n- Version control database schema\n- Easy data reset/seeding\n- Integrates with existing Docker workflow\n\n### Next Steps:\n1. Install Supabase CLI\n2. Initialize local Supabase project\n3. Update environment variables for local setup\n4. Integrate with existing Docker compose setup\n\n### Local Setup Instructions:\n\n1. **Install Supabase CLI:**\n   ```bash\n   # Using npm\n   npm install -g supabase\n   \n   # Or using Homebrew (macOS)\n   brew install supabase/tap/supabase\n   ```\n\n2. **Initialize Local Project:**\n   ```bash\n   # Create a supabase directory in your project\n   mkdir -p supabase\n   cd supabase\n   \n   # Initialize local project\n   supabase init\n   ```\n\n3. **Start Local Supabase:**\n   ```bash\n   supabase start\n   ```\n\n4. **Update Environment Variables:**\n   ```\n   # Local development environment variables\n   SUPABASE_URL=http://localhost:54321\n   SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...  # Use the anon key provided after 'supabase start'\n   SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5c... # Use the service_role key provided\n   ```\n\n5. **Docker Integration:**\n   Add to your existing docker-compose.yml:\n   ```yaml\n   services:\n     # Your existing services...\n     \n     supabase:\n       image: supabase/supabase-local\n       ports:\n         - \"54321:54321\"\n       volumes:\n         - ./supabase:/supabase\n   ```\n\n**Note:** The existing Supabase client configuration should work with both cloud and local setups as long as the environment variables are updated accordingly.\n</info added on 2025-06-15T00:47:02.337Z>",
+          "status": "done"
         },
         {
           "id": 3,
@@ -210,8 +210,8 @@
           "dependencies": [
             2
           ],
-          "details": "Use your Supabase project URL and anon/public API key to create a client instance in your Python application code. Example: `client = create_client(supabase_url, supabase_key)`.",
-          "status": "pending"
+          "details": "Use your Supabase project URL and anon/public API key to create a client instance in your Python application code. Example: `client = create_client(supabase_url, supabase_key)`.\n<info added on 2025-06-15T01:03:56.206Z>\n## Database Connection Successfully Established\n\n### ✅ Completed Implementation:\n- **Supabase Client Integration**: Integrated get_supabase_client() into FastAPI app startup\n- **Health Check Enhancement**: Added database connectivity check to /v1/health endpoint\n- **Connection Testing**: Successfully verified Supabase connection during app startup\n- **Error Handling**: Proper exception handling for database connection failures\n\n### 🧪 Testing Results:\n```json\n{\n    \"status\": \"ok\",\n    \"services\": {\n        \"api\": \"healthy\",\n        \"database\": {\n            \"status\": \"healthy\",\n            \"url\": \"http://127.0.0.1:54321\"\n        }\n    }\n}\n```\n\n### 🔧 Technical Details:\n- **Local Supabase URL**: http://127.0.0.1:54321\n- **FastAPI Server**: Running on http://127.0.0.1:8002\n- **Health Endpoint**: /v1/health provides real-time connectivity status\n- **Startup Validation**: App verifies database connection during lifespan startup\n\n### 📋 Code Changes:\n- Updated src/main.py with Supabase client initialization\n- Enhanced src/routers/v1/health.py with database status check\n- Fixed src/database/__init__.py exports to include test_connection\n- Environment variables properly configured for local development\n</info added on 2025-06-15T01:03:56.206Z>",
+          "status": "done"
         },
         {
           "id": 4,
