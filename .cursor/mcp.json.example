@@ -1,0 +1,26 @@
+{
+    "mcpServers": {
+      "memory": {
+          "command": "npx",
+          "args": ["-y", "@itseasy21/mcp-knowledge-graph@latest"],
+          "env": {
+            "MEMORY_FILE_PATH": "/path/to/your/project/memory.jsonl"
+          }
+        },
+        "taskmaster-ai": {
+          "command": "npx",
+          "args": ["-y", "--package=task-master-ai", "task-master-ai"],
+          "env": {
+            "ANTHROPIC_API_KEY": "your-anthropic-api-key-here",
+            "PERPLEXITY_API_KEY": "your-perplexity-api-key-here"
+          }
+        },
+        "github": {
+        "command": "npx",
+        "args": ["@modelcontextprotocol/server-github"],
+        "env": {
+          "GITHUB_PERSONAL_ACCESS_TOKEN": "your-github-token-here"
+        }
+      }
+    }
+  } 
