@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from ...utils.rate_limiting import lenient_rate_limit
-from ...database import get_supabase_client, test_connection
+from ...database import get_supabase_client, test_connection, get_storage_service, get_crud_service
 
 router = APIRouter()
 
@@ -32,6 +32,33 @@ def health_check():
             "status": "unhealthy",
             "error": str(e)
         }
+    
+    # Check storage service
+    try:
+        storage_service = get_storage_service()
+        # Test storage by listing buckets (this will fail if storage isn't working)
+        buckets = storage_service.client.storage.list_buckets()
+        bucket_names = [b.name for b in buckets] if buckets else []
+        
+        health_status["services"]["storage"] = {
+            "status": "healthy",
+            "buckets": bucket_names,
+            "bucket_types": list(storage_service.buckets.keys())
+        }
+    except Exception as e:
+        health_status["services"]["storage"] = {
+            "status": "unhealthy",
+            "error": str(e)
+        }
+    
+    # Update overall status based on services
+    unhealthy_services = [
+        name for name, service in health_status["services"].items() 
+        if isinstance(service, dict) and service.get("status") == "unhealthy"
+    ]
+    
+    if unhealthy_services:
         health_status["status"] = "degraded"
+        health_status["unhealthy_services"] = unhealthy_services
     
     return health_status 
